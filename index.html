@@ -13,7 +13,6 @@
             --primary: #0f172a; 
             --secondary: #1e293b;
             --accent: #0ea5e9; 
-            --accent-purple: #8b5cf6;
             --accent-glow: rgba(14, 165, 233, 0.4);
             --bg-base: #f1f5f9;
             --bg-white: #ffffff;
@@ -21,7 +20,7 @@
             --glass-border: rgba(255, 255, 255, 0.5);
             --text-main: #334155;
             --text-light: #94a3b8;
-            --gradient-flow: linear-gradient(270deg, #0ea5e9, #8b5cf6, #3b82f6, #0ea5e9);
+            --gradient-flow: linear-gradient(270deg, #0ea5e9, #3b82f6, #0ea5e9);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -41,7 +40,7 @@
             position: fixed;
             top: -50%; left: -50%; width: 200%; height: 200%;
             background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.04) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 30%);
+                        radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.03) 0%, transparent 30%);
             z-index: -1;
             animation: bgFloat 20s infinite linear;
         }
@@ -49,7 +48,7 @@
         /* =========================================
            Advanced Animations & Page Routing
            ========================================= */
-        @keyframes bgFloat { 0% { transform: rotate(0deg) translate(0, 0); } 50% { transform: rotate(180deg) translate(20px, 20px); } 100% { transform: rotate(360deg) translate(0, 0); } }
+        @keyframes bgFloat { 0% { transform: rotate(0deg) translate(0, 0); } 50% { transform: rotate(180deg) translate(15px, 15px); } 100% { transform: rotate(360deg) translate(0, 0); } }
         @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes borderSpin { 100% { transform: rotate(360deg); } }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -105,12 +104,16 @@
         .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; position: relative; }
         
-        /* Active Nav Styling */
         .nav-links a:hover, .nav-links a.active { color: var(--accent); }
         .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--accent); transition: width 0.3s ease-out; }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
         
         .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; }
+
+        /* Slider Control Panel UI (Hidden on desktop, shown on mobile section-headers) */
+        .slider-controls { display: none; gap: 10px; margin-top: 10px; justify-content: center; }
+        .slider-arrow { background: var(--primary); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; transition: background 0.3s; }
+        .slider-arrow:hover { background: var(--accent); }
 
         /* =========================================
            Hero Section
@@ -139,7 +142,7 @@
            General Sections & Split Layouts
            ========================================= */
         section { padding: 6rem 5%; }
-        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; position: relative; }
         .section-header h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--primary); margin-bottom: 1.2rem; font-weight: 900; letter-spacing: -1px; }
         .section-header p { font-size: 1.15rem; color: var(--text-main); max-width: 800px; margin: 0 auto; line-height: 1.8; }
 
@@ -202,7 +205,7 @@
         .tech-item:hover i { color: var(--accent); transform: scale(1.1); }
 
         /* =========================================
-           Contact Form
+           Contact Footer Form Layout
            ========================================= */
         .contact-container { max-width: 650px; margin: 0 auto; background: white; padding: 4rem 3.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0,0,0,0.05); position: relative; overflow: hidden; margin-bottom: 3rem; }
         .contact-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--gradient-flow); background-size: 200% 200%; animation: gradientMove 3s ease infinite; }
@@ -214,7 +217,7 @@
         .submit-btn:hover { background: var(--accent); box-shadow: 0 15px 30px var(--accent-glow); transform: translateY(-2px); }
 
         /* =========================================
-           Footer
+           Footer Configuration
            ========================================= */
         .site-footer { width: 100%; background: var(--primary); color: white; position: relative; }
         .footer-top { padding: 6rem 5% 4rem 5%; }
@@ -259,7 +262,6 @@
 
         .tech-detail-body p { margin-bottom: 2rem; font-size: 1.2rem; line-height: 1.8; color: var(--text-main); }
         
-        /* Modal Internal Grids */
         .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-top: 3rem; }
         .modal-card { background: white; padding: 3rem; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: all 0.4s; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
         .modal-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 25px 50px rgba(14, 165, 233, 0.15); }
@@ -277,7 +279,7 @@
         .img-card .body { padding: 2.5rem; flex-grow: 1; display: flex; flex-direction: column; }
         .img-card .metric { display: inline-block; background: var(--primary); color: white; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 800; font-size: 0.95rem; align-self: flex-start; letter-spacing: 1px; margin-top: auto; }
 
-        /* Floating Socials */
+        /* Floating Controls */
         .floating-socials { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 2500; }
         .social-btn { width: 60px; height: 60px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
         .social-btn:hover { transform: translateY(-10px) scale(1.15); color: white; border-color: transparent; }
@@ -298,11 +300,12 @@
             .reveal { transform: translateY(60px) scale(0.92); transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
             .reveal.active { transform: translateY(0) scale(1); }
 
-            /* Subtle mobile ambient background shift */
+            /* Display Navigation Indicators on Header Cards */
+            .slider-controls { display: flex; }
+
             body { animation: mobileBgShift 15s ease-in-out infinite alternate; }
             @keyframes mobileBgShift { 0% { background-color: var(--bg-base); } 100% { background-color: #e2e8f0; } }
 
-            /* Custom Touch Vibration / Pop Effect */
             @keyframes mobileVibrate {
                 0% { transform: translate(0) scale(0.98); }
                 25% { transform: translate(-2px, 1px) scale(0.98); }
@@ -325,6 +328,26 @@
             .footer-top-row { flex-direction: column; align-items: center; text-align: center; }
             .newsletter-box { max-width: 100%; width: 100%; }
             .floating-socials { bottom: 20px; right: 20px; }
+
+            /* 2x2 Grid Layout for Metrics */
+            .tech-stats-container { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .ts-card { padding: 1.5rem 1rem; }
+            .ts-val { font-size: 2rem; }
+
+            /* Horizontal Snapping Carousels */
+            .timeline-grid, #standards .feature-list, #build .feature-list, #pod .feature-list {
+                display: flex; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 1.5rem;
+            }
+            .timeline-grid::-webkit-scrollbar, #standards .feature-list::-webkit-scrollbar, #build .feature-list::-webkit-scrollbar, #pod .feature-list::-webkit-scrollbar { display: none; }
+            .timeline-grid > div, #standards .feature-list > li, #build .feature-list > li, #pod .feature-list > li { flex: 0 0 85%; scroll-snap-align: center; }
+
+            .sub-tab-buttons { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .sub-tab-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.8rem 1.5rem; }
+
+            .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .tech-item { width: 100%; padding: 1.5rem 0.5rem; font-size: 0.9rem; }
+            .tech-item i { font-size: 2rem; }
+
             .modal-grid { grid-template-columns: 1fr; }
             .contact-container { padding: 3rem 2rem; }
         }
@@ -332,7 +355,6 @@
 </head>
 <body>
 
-    <!-- Top Navigation -->
     <nav class="glass">
         <div class="logo" onclick="window.location.hash='#home'; router();"><i class="fa-solid fa-layer-group"></i> CAELION</div>
         <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
@@ -346,10 +368,8 @@
         </ul>
     </nav>
 
-    <!-- Main Dynamic Content Wrapper -->
     <main id="main-content">
         
-        <!-- PAGE 1: HOME -->
         <div id="home" class="page-section">
             <section class="hero">
                 <h1 class="reveal">AI-Native Custom Software Engineering</h1>
@@ -364,7 +384,6 @@
             </div>
         </div>
 
-        <!-- PAGE 2: PHILOSOPHY -->
         <div id="philosophy" class="page-section">
             <section class="split-section" style="padding-top: 6rem;">
                 <div class="split-content reveal">
@@ -379,14 +398,17 @@
             </section>
         </div>
 
-        <!-- PAGE 3: ENGAGEMENT -->
         <div id="engagement" class="page-section">
-            <section class="glass" style="margin: 4rem 5%; border-radius: 30px;">
+            <section class="glass" style="margin: 4rem 5%; border-radius: 24px;">
                 <div class="section-header reveal">
                     <h2>How To Engage</h2>
-                    <p>We provide structured, high-velocity engineering paths. Choose the model that accelerates your immediate enterprise roadmap.</p>
+                    <p style="margin-bottom: 10px;">We provide structured, high-velocity engineering paths. Choose the model that accelerates your immediate enterprise roadmap.</p>
+                    <div class="slider-controls">
+                        <button class="slider-arrow" onclick="scrollCarousel('engage-slider', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="slider-arrow" onclick="scrollCarousel('engage-slider', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
                 </div>
-                <div class="timeline-grid reveal reveal-delay-1">
+                <div id="engage-slider" class="timeline-grid reveal reveal-delay-1">
                     <div class="flow-box"><div class="flow-inner timeline-card">
                         <span class="step-number">1</span><span class="timeline-tag">Start Here</span>
                         <h3>Rapid Assessment</h3><p>2-4 week fixed-fee sprint. We provide an architecture audit, risk register, AI-readiness scorecard, and a prioritized modernization roadmap.</p>
@@ -409,7 +431,11 @@
             <section>
                 <div class="section-header reveal">
                     <h2>The Delivery Pod Architecture</h2>
-                    <p>Every engagement runs on a cross-functional Delivery Pod—self-contained, autonomous, shipping every 2 weeks. Senior engineers only. No juniors. No bait-and-switch.</p>
+                    <p style="margin-bottom: 10px;">Every engagement runs on a cross-functional Delivery Pod—self-contained, autonomous, shipping every 2 weeks. Senior engineers only.</p>
+                    <div class="slider-controls">
+                        <button class="slider-arrow" onclick="scrollCarousel('pod-slider-1', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="slider-arrow" onclick="scrollCarousel('pod-slider-1', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
                 </div>
 
                 <div class="tab-container glass reveal reveal-delay-1">
@@ -419,7 +445,7 @@
                     </div>
 
                     <div id="build" class="tab-content main-tab active">
-                        <ul class="feature-list">
+                        <ul id="pod-slider-1" class="feature-list">
                             <li>
                                 <strong>Custom Software Products</strong>
                                 <p>Web apps, mobile apps, SaaS platforms, and internal tools—engineered end-to-end with full CI/CD, observability, and production hardening.</p>
@@ -440,7 +466,7 @@
                     </div>
 
                     <div id="pod" class="tab-content main-tab">
-                        <ul class="feature-list">
+                        <ul id="pod-slider-2" class="feature-list">
                             <li><strong>Pod Lead / Architect</strong><br>Owns technical direction, architecture decisions, and client outcomes. Staff or Principal Engineer level.</li>
                             <li><strong>Full-Stack Engineers (2-4)</strong><br>Senior engineers across frontend, backend, and API layers. All write tests and own their code in production.</li>
                             <li><strong>AI/ML Engineer</strong><br>LLM Integrations, agent workflows, RAG pipelines, and feature engineering. Bridges data science and production.</li>
@@ -451,25 +477,27 @@
             </section>
         </div>
 
-        <!-- PAGE 4: STANDARDS -->
         <div id="standards" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
                     <h2>Engineering Standards</h2>
-                    <p>Our pods operate under immutable delivery laws. We don't negotiate on code quality.</p>
+                    <p style="margin-bottom: 10px;">Our pods operate under immutable delivery laws. We don't negotiate on code quality.</p>
+                    <div class="slider-controls">
+                        <button class="slider-arrow" onclick="scrollCarousel('standards-slider', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="slider-arrow" onclick="scrollCarousel('standards-slider', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
                 </div>
                 <div class="tab-container glass reveal reveal-delay-1" style="background: transparent; border: none; box-shadow: none;">
-                    <ul class="feature-list">
-                        <li class="glass"><i class="fa-solid fa-code-commit" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>1. Code Quality (ENFORCED)</strong> ESLint / SonarQube gates. Cyclomatic complexity limits. PR reviews on every merge.</li>
-                        <li class="glass"><i class="fa-solid fa-vial-circle-check" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>2. Test Coverage (80% MIN)</strong> Unit, Integration, E2E, and contract tests required. Automated in CI on every commit.</li>
-                        <li class="glass"><i class="fa-solid fa-shield-virus" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>3. Security Scanning (EVERY BUILD)</strong> SAST/DAST, Snyk CVE scanning, OWASP Top 10, secrets scanning on every push.</li>
-                        <li class="glass"><i class="fa-solid fa-satellite-dish" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>4. Observability (DAY ONE)</strong> Structured logging, distributed tracing, dashboards, and runbooks before go-live.</li>
+                    <ul id="standards-slider" class="feature-list">
+                        <li class="glass"><i class="fa-solid fa-code-commit" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>1. Code Quality (ENFORCED)</strong> ESLint / SonarQube gates. Cyclomatic complexity limits. PR reviews on every merge.</li>
+                        <li class="glass"><i class="fa-solid fa-vial-circle-check" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>2. Test Coverage (80% MIN)</strong> Unit, Integration, E2E, and contract tests required. Automated in CI on every commit.</li>
+                        <li class="glass"><i class="fa-solid fa-shield-virus" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>3. Security Scanning (EVERY BUILD)</strong> SAST/DAST, Snyk CVE scanning, OWASP Top 10, secrets scanning on every push.</li>
+                        <li class="glass"><i class="fa-solid fa-satellite-dish" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>4. Observability (DAY ONE)</strong> Structured logging, distributed tracing, dashboards, and runbooks before go-live.</li>
                     </ul>
                 </div>
             </section>
         </div>
 
-        <!-- PAGE 5: TECH STACK -->
         <div id="stack" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
@@ -477,12 +505,12 @@
                     <p>Caelion engineers are opinionated about tooling—we choose battle-tested, cloud-native technologies with strong community support and long-term viability. Click any technology to explore our architectural integration methodologies.</p>
                 </div>
 
-                <h3 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 2.2rem; font-weight: 900;">WHAT WE SHIP WITH</h3>
+                <h3 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 1.8rem; font-weight: 900;">WHAT WE SHIP WITH</h3>
                 <div class="tech-stats-container reveal reveal-delay-1">
-                    <div class="ts-card"><div class="ts-val">6</div><div class="ts-title">Technology Categories</div><div class="ts-desc">Frontend, backend, data, AI/ML, cloud, and observability—full-spectrum coverage.</div></div>
+                    <div class="ts-card"><div class="ts-val">6</div><div class="ts-title">Technology Categories</div><div class="ts-desc">Frontend, backend, data, AI/ML, cloud, and observability.</div></div>
                     <div class="ts-card"><div class="ts-val">9+</div><div class="ts-title">Tools Per Category</div><div class="ts-desc">Deep expertise across every layer of the modern enterprise stack.</div></div>
-                    <div class="ts-card"><div class="ts-val">100%</div><div class="ts-title">Open Standards</div><div class="ts-desc">No proprietary lock-in. Full source code and docs handed over at close.</div></div>
-                    <div class="ts-card"><div class="ts-val">3</div><div class="ts-title">Cloud Platforms</div><div class="ts-desc">AWS, Azure, and GCP—cloud-agnostic by design, no vendor lock-in.</div></div>
+                    <div class="ts-card"><div class="ts-val">100%</div><div class="ts-title">Open Standards</div><div class="ts-desc">No proprietary lock-in. Full source code and docs handed over.</div></div>
+                    <div class="ts-card"><div class="ts-val">3</div><div class="ts-title">Cloud Platforms</div><div class="ts-desc">AWS, Azure, and GCP—cloud-agnostic by design.</div></div>
                 </div>
 
                 <div class="tab-container reveal reveal-delay-2" style="border: none; box-shadow: none; background: transparent;">
@@ -549,7 +577,6 @@
             </section>
         </div>
 
-        <!-- PAGE 6: CONTACT HR -->
         <div id="contact" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
@@ -569,7 +596,6 @@
 
     </main>
 
-    <!-- Dynamic Enterprise Footer Layout -->
     <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-top-row reveal">
@@ -635,34 +661,26 @@
                 <a onclick="openDataModal('legal_cookie')" target="_blank">Cookie Notice <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a>
             </div>
             
-            <!-- CAELION FOOTER BRAND TEXT FROM IMAGE -->
             <div class="footer-brand-text">CAELION — caelion.in | info@caelion.in</div>
             
             <p class="copyright">© 2026. CAELION Custom Software Engineering - caelion.in | All architectural blueprints strictly regulated.</p>
         </div>
     </footer>
 
-    <!-- Floating Social Controls -->
     <div class="floating-socials">
         <a href="https://wa.me/917989004552" target="_blank" class="social-btn whatsapp glass" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://linkedin.com" target="_blank" class="social-btn linkedin glass" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     </div>
 
-    <!-- =========================================
-         RICH INTERACTIVE MODALS (LONG DATA INTEGRATION)
-         ========================================= -->
-
-    <!-- Dynamic "Long Data" Tech Stack Modal -->
     <div id="dynamic-data-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'dynamic-data-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('dynamic-data-modal')"><i class="fa-solid fa-xmark"></i></button>
-            <i id="dd-modal-icon" class="fa-brands fa-react" style="font-size: 4.5rem; color: var(--accent); margin-bottom: 1.5rem; display: block; text-align: center;"></i>
+            <i id="dd-modal-icon" class="fa-brands fa-react" style="font-size: 3.5rem; color: var(--accent); margin-bottom: 1rem; display: block; text-align: center;"></i>
             <h2 id="dd-modal-title" class="modal-header-title" style="display: block; text-align: center;">Technology</h2>
-            <div id="dd-modal-body" class="tech-detail-body" style="margin-top: 2.5rem;"></div>
+            <div id="dd-modal-body" class="tech-detail-body" style="margin-top: 1.5rem;"></div>
         </div>
     </div>
 
-    <!-- Rich Contact Details Modal -->
     <div id="contact-details-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'contact-details-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('contact-details-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -691,12 +709,11 @@
         </div>
     </div>
 
-    <!-- Rich Case Studies Modal -->
     <div id="case-studies-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'case-studies-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('case-studies-modal')"><i class="fa-solid fa-xmark"></i></button>
             <h2 class="modal-header-title">Production Architectural Case Studies</h2>
-            <div class="modal-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+            <div class="modal-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
                 <div class="modal-card img-card">
                     <div class="img-container"><img src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?q=80&w=800&auto=format&fit=crop" alt="Inventory ERP Grid"></div>
                     <div class="body">
@@ -725,7 +742,6 @@
         </div>
     </div>
 
-    <!-- Rich Industries Modal -->
     <div id="industries-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'industries-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('industries-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -756,7 +772,6 @@
         </div>
     </div>
 
-    <!-- Rich Careers Modal -->
     <div id="careers-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'careers-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('careers-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -782,7 +797,7 @@
                 <div class="flow-box"><div class="flow-inner" style="padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
                     <div>
                         <h3 style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem;">Interactive UI/UX Specialist</h3>
-                        <p style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 1.5rem;">Core Requirements: Three.js web animation designs, advanced spatial 3D components, modern glassmorphism layouts.</p>
+                        <p style="font-size: 1.05rem; color: var(--text-main); margin-bottom: 1rem;">Core Requirements: Three.js web animation designs, advanced spatial 3D components, modern glassmorphism layouts.</p>
                         <div class="tech-tags"><span>Remote Only</span><span>Contract Retainer</span><span>5+ Yrs Exp</span></div>
                     </div>
                     <a href="mailto:careers@caelion.in?subject=Application:%20UIUX%20Specialist" class="submit-btn" style="width: auto; text-decoration: none;" target="_blank">Submit Resume</a>
@@ -791,7 +806,6 @@
         </div>
     </div>
 
-    <!-- Long Data Text Modals -->
     <div id="about-caelion-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'about-caelion-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('about-caelion-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -838,7 +852,6 @@
         </div>
     </div>
 
-    <!-- Application Script Logic & Single Page Router -->
     <script>
         // LONG DATA DICTIONARY 
         const modalData = {
@@ -891,35 +904,38 @@
             reveals.forEach(reveal => { revealObserver.observe(reveal); });
         }
 
+        // Horizontal slider utility for pagination arrows
+        function scrollCarousel(sliderId, direction) {
+            const slider = document.getElementById(sliderId);
+            if (!slider) return;
+            const cardWidth = slider.firstElementChild.getBoundingClientRect().width;
+            slider.scrollBy({ left: direction * (cardWidth + 24), behavior: 'smooth' });
+        }
+
         // =========================================
         // Hash Router Implementation
         // =========================================
         function router() {
             let hash = window.location.hash || '#home';
             
-            // Hide all pages and remove active classes
             document.querySelectorAll('.page-section').forEach(sec => {
                 sec.classList.remove('active-page');
                 sec.style.display = 'none';
             });
 
-            // Reset specific reveal animations so they re-trigger on new pages
             document.querySelectorAll('.reveal').forEach(el => el.classList.remove('active'));
 
             if (hash === '#home') {
-                // If Home, display ALL sections sequentially to show total data
                 document.querySelectorAll('.page-section').forEach(sec => {
                     sec.style.display = 'block';
                     setTimeout(() => sec.classList.add('active-page'), 10);
                 });
             } else {
-                // Show ONLY the specific section requested
                 const activeSection = document.querySelector(hash);
                 if (activeSection && activeSection.classList.contains('page-section')) {
                     activeSection.style.display = 'block';
                     setTimeout(() => activeSection.classList.add('active-page'), 10);
                 } else {
-                    // Fallback to home (show all)
                     document.querySelectorAll('.page-section').forEach(sec => {
                         sec.style.display = 'block';
                         setTimeout(() => sec.classList.add('active-page'), 10);
@@ -928,7 +944,6 @@
                 }
             }
 
-            // Update Nav visual state
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === hash) {
@@ -937,7 +952,7 @@
             });
 
             window.scrollTo(0,0);
-            setTimeout(initObservers, 50); // Re-init observers for the new page layout
+            setTimeout(initObservers, 50);
         }
 
         window.addEventListener('hashchange', router);
