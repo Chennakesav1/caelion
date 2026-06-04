@@ -104,16 +104,20 @@
         .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; position: relative; }
         
+        /* Active Nav Styling */
         .nav-links a:hover, .nav-links a.active { color: var(--accent); }
         .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--accent); transition: width 0.3s ease-out; }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
         
         .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; }
 
-        /* Slider Control Panel UI (Hidden on desktop, shown on mobile section-headers) */
-        .slider-controls { display: none; gap: 10px; margin-top: 10px; justify-content: center; }
-        .slider-arrow { background: var(--primary); color: white; border: none; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; transition: background 0.3s; }
-        .slider-arrow:hover { background: var(--accent); }
+        /* =========================================
+           Slider Controls (Hidden on Desktop)
+           ========================================= */
+        .slider-controls { display: none; gap: 15px; margin-top: 2rem; justify-content: center; width: 100%; }
+        .slider-arrow { background: var(--bg-white); border: 1px solid var(--border); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .slider-arrow i { color: orange; font-size: 1.3rem; transition: transform 0.3s; }
+        .slider-arrow:hover { background: var(--bg-base); box-shadow: 0 6px 15px rgba(255, 165, 0, 0.2); border-color: orange; }
 
         /* =========================================
            Hero Section
@@ -205,7 +209,7 @@
         .tech-item:hover i { color: var(--accent); transform: scale(1.1); }
 
         /* =========================================
-           Contact Footer Form Layout
+           Contact Form
            ========================================= */
         .contact-container { max-width: 650px; margin: 0 auto; background: white; padding: 4rem 3.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0,0,0,0.05); position: relative; overflow: hidden; margin-bottom: 3rem; }
         .contact-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--gradient-flow); background-size: 200% 200%; animation: gradientMove 3s ease infinite; }
@@ -217,7 +221,7 @@
         .submit-btn:hover { background: var(--accent); box-shadow: 0 15px 30px var(--accent-glow); transform: translateY(-2px); }
 
         /* =========================================
-           Footer Configuration
+           Footer
            ========================================= */
         .site-footer { width: 100%; background: var(--primary); color: white; position: relative; }
         .footer-top { padding: 6rem 5% 4rem 5%; }
@@ -279,7 +283,7 @@
         .img-card .body { padding: 2.5rem; flex-grow: 1; display: flex; flex-direction: column; }
         .img-card .metric { display: inline-block; background: var(--primary); color: white; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 800; font-size: 0.95rem; align-self: flex-start; letter-spacing: 1px; margin-top: auto; }
 
-        /* Floating Controls */
+        /* Floating Socials */
         .floating-socials { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 2500; }
         .social-btn { width: 60px; height: 60px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
         .social-btn:hover { transform: translateY(-10px) scale(1.15); color: white; border-color: transparent; }
@@ -300,12 +304,14 @@
             .reveal { transform: translateY(60px) scale(0.92); transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
             .reveal.active { transform: translateY(0) scale(1); }
 
-            /* Display Navigation Indicators on Header Cards */
+            /* Slider Controls below boxes */
             .slider-controls { display: flex; }
 
+            /* Subtle mobile ambient background shift */
             body { animation: mobileBgShift 15s ease-in-out infinite alternate; }
             @keyframes mobileBgShift { 0% { background-color: var(--bg-base); } 100% { background-color: #e2e8f0; } }
 
+            /* Custom Touch Vibration / Pop Effect */
             @keyframes mobileVibrate {
                 0% { transform: translate(0) scale(0.98); }
                 25% { transform: translate(-2px, 1px) scale(0.98); }
@@ -329,19 +335,19 @@
             .newsletter-box { max-width: 100%; width: 100%; }
             .floating-socials { bottom: 20px; right: 20px; }
 
-            /* 2x2 Grid Layout for Metrics */
+            /* Horizontal Scroll Opts for Mobile */
             .tech-stats-container { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .ts-card { padding: 1.5rem 1rem; }
             .ts-val { font-size: 2rem; }
 
-            /* Horizontal Snapping Carousels */
             .timeline-grid, #standards .feature-list, #build .feature-list, #pod .feature-list {
-                display: flex; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 1.5rem;
+                display: flex; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 1.5rem; margin-bottom: 1.5rem;
             }
             .timeline-grid::-webkit-scrollbar, #standards .feature-list::-webkit-scrollbar, #build .feature-list::-webkit-scrollbar, #pod .feature-list::-webkit-scrollbar { display: none; }
             .timeline-grid > div, #standards .feature-list > li, #build .feature-list > li, #pod .feature-list > li { flex: 0 0 85%; scroll-snap-align: center; }
 
             .sub-tab-buttons { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 1rem; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .sub-tab-buttons::-webkit-scrollbar { display: none; }
             .sub-tab-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.8rem 1.5rem; }
 
             .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -355,6 +361,7 @@
 </head>
 <body>
 
+    <!-- Top Navigation -->
     <nav class="glass">
         <div class="logo" onclick="window.location.hash='#home'; router();"><i class="fa-solid fa-layer-group"></i> CAELION</div>
         <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
@@ -368,8 +375,10 @@
         </ul>
     </nav>
 
+    <!-- Main Dynamic Content Wrapper -->
     <main id="main-content">
         
+        <!-- PAGE 1: HOME -->
         <div id="home" class="page-section">
             <section class="hero">
                 <h1 class="reveal">AI-Native Custom Software Engineering</h1>
@@ -384,6 +393,7 @@
             </div>
         </div>
 
+        <!-- PAGE 2: PHILOSOPHY -->
         <div id="philosophy" class="page-section">
             <section class="split-section" style="padding-top: 6rem;">
                 <div class="split-content reveal">
@@ -398,15 +408,12 @@
             </section>
         </div>
 
+        <!-- PAGE 3: ENGAGEMENT -->
         <div id="engagement" class="page-section">
-            <section class="glass" style="margin: 4rem 5%; border-radius: 24px;">
+            <section class="glass" style="margin: 4rem 5%; border-radius: 30px;">
                 <div class="section-header reveal">
                     <h2>How To Engage</h2>
                     <p style="margin-bottom: 10px;">We provide structured, high-velocity engineering paths. Choose the model that accelerates your immediate enterprise roadmap.</p>
-                    <div class="slider-controls">
-                        <button class="slider-arrow" onclick="scrollCarousel('engage-slider', -1)"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-arrow" onclick="scrollCarousel('engage-slider', 1)"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
                 </div>
                 <div id="engage-slider" class="timeline-grid reveal reveal-delay-1">
                     <div class="flow-box"><div class="flow-inner timeline-card">
@@ -426,16 +433,17 @@
                         <h3>Advisory Retainer</h3><p>Fractional CTO deployment. Includes monthly architecture reviews, technology strategy, and maintaining a running Architecture Decision Log.</p>
                     </div></div>
                 </div>
+                <!-- Pagination indicators -->
+                <div class="slider-controls reveal reveal-delay-2">
+                    <button class="slider-arrow" onclick="scrollCarousel('engage-slider', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="slider-arrow" onclick="scrollCarousel('engage-slider', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
             </section>
 
             <section>
                 <div class="section-header reveal">
                     <h2>The Delivery Pod Architecture</h2>
                     <p style="margin-bottom: 10px;">Every engagement runs on a cross-functional Delivery Pod—self-contained, autonomous, shipping every 2 weeks. Senior engineers only.</p>
-                    <div class="slider-controls">
-                        <button class="slider-arrow" onclick="scrollCarousel('pod-slider-1', -1)"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-arrow" onclick="scrollCarousel('pod-slider-1', 1)"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
                 </div>
 
                 <div class="tab-container glass reveal reveal-delay-1">
@@ -463,6 +471,10 @@
                                 <p>Context-aware workflow automation, integration orchestration, and AI decision support—cutting manual cycle times by 60-80%.</p>
                             </li>
                         </ul>
+                        <div class="slider-controls">
+                            <button class="slider-arrow" onclick="scrollCarousel('pod-slider-1', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button class="slider-arrow" onclick="scrollCarousel('pod-slider-1', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
                     </div>
 
                     <div id="pod" class="tab-content main-tab">
@@ -472,20 +484,21 @@
                             <li><strong>AI/ML Engineer</strong><br>LLM Integrations, agent workflows, RAG pipelines, and feature engineering. Bridges data science and production.</li>
                             <li><strong>Platform/DevOps & QA</strong><br>IaC, Kubernetes, CI/CD, and observability. Production-hardened, cost-optimized, operationally sound. Shift-left QA culture.</li>
                         </ul>
+                        <div class="slider-controls">
+                            <button class="slider-arrow" onclick="scrollCarousel('pod-slider-2', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button class="slider-arrow" onclick="scrollCarousel('pod-slider-2', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
+        <!-- PAGE 4: STANDARDS -->
         <div id="standards" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
                     <h2>Engineering Standards</h2>
                     <p style="margin-bottom: 10px;">Our pods operate under immutable delivery laws. We don't negotiate on code quality.</p>
-                    <div class="slider-controls">
-                        <button class="slider-arrow" onclick="scrollCarousel('standards-slider', -1)"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="slider-arrow" onclick="scrollCarousel('standards-slider', 1)"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
                 </div>
                 <div class="tab-container glass reveal reveal-delay-1" style="background: transparent; border: none; box-shadow: none;">
                     <ul id="standards-slider" class="feature-list">
@@ -494,10 +507,15 @@
                         <li class="glass"><i class="fa-solid fa-shield-virus" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>3. Security Scanning (EVERY BUILD)</strong> SAST/DAST, Snyk CVE scanning, OWASP Top 10, secrets scanning on every push.</li>
                         <li class="glass"><i class="fa-solid fa-satellite-dish" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>4. Observability (DAY ONE)</strong> Structured logging, distributed tracing, dashboards, and runbooks before go-live.</li>
                     </ul>
+                    <div class="slider-controls">
+                        <button class="slider-arrow" onclick="scrollCarousel('standards-slider', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="slider-arrow" onclick="scrollCarousel('standards-slider', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
                 </div>
             </section>
         </div>
 
+        <!-- PAGE 5: TECH STACK -->
         <div id="stack" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
@@ -505,7 +523,7 @@
                     <p>Caelion engineers are opinionated about tooling—we choose battle-tested, cloud-native technologies with strong community support and long-term viability. Click any technology to explore our architectural integration methodologies.</p>
                 </div>
 
-                <h3 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 1.8rem; font-weight: 900;">WHAT WE SHIP WITH</h3>
+                <h3 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 2.2rem; font-weight: 900;">WHAT WE SHIP WITH</h3>
                 <div class="tech-stats-container reveal reveal-delay-1">
                     <div class="ts-card"><div class="ts-val">6</div><div class="ts-title">Technology Categories</div><div class="ts-desc">Frontend, backend, data, AI/ML, cloud, and observability.</div></div>
                     <div class="ts-card"><div class="ts-val">9+</div><div class="ts-title">Tools Per Category</div><div class="ts-desc">Deep expertise across every layer of the modern enterprise stack.</div></div>
@@ -577,6 +595,7 @@
             </section>
         </div>
 
+        <!-- PAGE 6: CONTACT HR -->
         <div id="contact" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
@@ -596,6 +615,7 @@
 
     </main>
 
+    <!-- Dynamic Enterprise Footer Layout -->
     <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-top-row reveal">
@@ -661,17 +681,24 @@
                 <a onclick="openDataModal('legal_cookie')" target="_blank">Cookie Notice <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a>
             </div>
             
+            <!-- CAELION FOOTER BRAND TEXT FROM IMAGE -->
             <div class="footer-brand-text">CAELION — caelion.in | info@caelion.in</div>
             
             <p class="copyright">© 2026. CAELION Custom Software Engineering - caelion.in | All architectural blueprints strictly regulated.</p>
         </div>
     </footer>
 
+    <!-- Floating Social Controls -->
     <div class="floating-socials">
         <a href="https://wa.me/917989004552" target="_blank" class="social-btn whatsapp glass" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://linkedin.com" target="_blank" class="social-btn linkedin glass" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     </div>
 
+    <!-- =========================================
+         RICH INTERACTIVE MODALS (LONG DATA INTEGRATION)
+         ========================================= -->
+
+    <!-- Dynamic "Long Data" Tech Stack Modal -->
     <div id="dynamic-data-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'dynamic-data-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('dynamic-data-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -681,6 +708,7 @@
         </div>
     </div>
 
+    <!-- Rich Contact Details Modal -->
     <div id="contact-details-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'contact-details-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('contact-details-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -709,6 +737,7 @@
         </div>
     </div>
 
+    <!-- Rich Case Studies Modal -->
     <div id="case-studies-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'case-studies-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('case-studies-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -742,11 +771,12 @@
         </div>
     </div>
 
+    <!-- Rich Industries Modal -->
     <div id="industries-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'industries-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('industries-modal')"><i class="fa-solid fa-xmark"></i></button>
             <h2 class="modal-header-title">Target Sectors We Transform</h2>
-            <div class="modal-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+            <div class="modal-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
                 <div class="modal-card img-card">
                     <div class="img-container"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" alt="Manufacturing"></div>
                     <div class="body">
@@ -772,6 +802,7 @@
         </div>
     </div>
 
+    <!-- Rich Careers Modal -->
     <div id="careers-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'careers-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('careers-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -797,7 +828,7 @@
                 <div class="flow-box"><div class="flow-inner" style="padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
                     <div>
                         <h3 style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem;">Interactive UI/UX Specialist</h3>
-                        <p style="font-size: 1.05rem; color: var(--text-main); margin-bottom: 1rem;">Core Requirements: Three.js web animation designs, advanced spatial 3D components, modern glassmorphism layouts.</p>
+                        <p style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 1.5rem;">Core Requirements: Three.js web animation designs, advanced spatial 3D components, modern glassmorphism layouts.</p>
                         <div class="tech-tags"><span>Remote Only</span><span>Contract Retainer</span><span>5+ Yrs Exp</span></div>
                     </div>
                     <a href="mailto:careers@caelion.in?subject=Application:%20UIUX%20Specialist" class="submit-btn" style="width: auto; text-decoration: none;" target="_blank">Submit Resume</a>
@@ -806,6 +837,7 @@
         </div>
     </div>
 
+    <!-- Long Data Text Modals -->
     <div id="about-caelion-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'about-caelion-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('about-caelion-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -852,6 +884,7 @@
         </div>
     </div>
 
+    <!-- Application Script Logic & Single Page Router -->
     <script>
         // LONG DATA DICTIONARY 
         const modalData = {
