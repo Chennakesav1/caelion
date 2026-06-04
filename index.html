@@ -13,6 +13,7 @@
             --primary: #0f172a; 
             --secondary: #1e293b;
             --accent: #0ea5e9; 
+            --accent-purple: #8b5cf6;
             --accent-glow: rgba(14, 165, 233, 0.4);
             --bg-base: #f1f5f9;
             --bg-white: #ffffff;
@@ -20,7 +21,7 @@
             --glass-border: rgba(255, 255, 255, 0.5);
             --text-main: #334155;
             --text-light: #94a3b8;
-            --gradient-flow: linear-gradient(270deg, #0ea5e9, #3b82f6, #0ea5e9);
+            --gradient-flow: linear-gradient(270deg, #0ea5e9, #8b5cf6, #3b82f6, #0ea5e9);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -40,25 +41,29 @@
             position: fixed;
             top: -50%; left: -50%; width: 200%; height: 200%;
             background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.04) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.03) 0%, transparent 30%);
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 30%);
             z-index: -1;
             animation: bgFloat 20s infinite linear;
         }
 
         /* =========================================
-           Advanced Animations
+           Advanced Animations & Page Routing
            ========================================= */
-        @keyframes bgFloat { 0% { transform: rotate(0deg) translate(0, 0); } 50% { transform: rotate(180deg) translate(15px, 15px); } 100% { transform: rotate(360deg) translate(0, 0); } }
+        @keyframes bgFloat { 0% { transform: rotate(0deg) translate(0, 0); } 50% { transform: rotate(180deg) translate(20px, 20px); } 100% { transform: rotate(360deg) translate(0, 0); } }
         @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes borderSpin { 100% { transform: rotate(360deg); } }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes pulseGlow { 0% { text-shadow: 0 0 5px var(--accent-glow); } 50% { text-shadow: 0 0 20px var(--accent-glow); } 100% { text-shadow: 0 0 5px var(--accent-glow); } }
 
-        /* Desktop Scroll Reveal */
+        /* Scroll Reveal Classes */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.15s; }
         .reveal-delay-2 { transition-delay: 0.3s; }
+
+        /* Single Page Routing Classes */
+        .page-section { display: none; opacity: 0; }
+        .page-section.active-page { display: block; animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
         /* =========================================
            2-Color Flowing Border Box (Premium Effect)
@@ -67,7 +72,7 @@
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            padding: 2px; /* Ultra-thin sleek border */
+            padding: 2px;
             background: transparent;
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s;
         }
@@ -75,30 +80,17 @@
             content: '';
             position: absolute;
             top: -100%; left: -100%; width: 300%; height: 300%;
-            /* Strictly two colors: Transparent tail fading into the accent blue */
             background: conic-gradient(transparent 75%, var(--accent) 100%);
             animation: borderSpin 3.5s linear infinite;
             opacity: 1; 
         }
         .flow-box:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 25px 50px rgba(14, 165, 233, 0.15); }
-        .flow-box:hover::before { animation-duration: 1.5s; /* Speeds up on hover */ }
+        .flow-box:hover::before { animation-duration: 1.5s; }
         
-        .flow-inner {
-            position: relative;
-            background: var(--bg-white);
-            border-radius: 18px;
-            height: 100%;
-            z-index: 1;
-        }
+        .flow-inner { position: relative; background: var(--bg-white); border-radius: 18px; height: 100%; z-index: 1; }
 
         /* Glassmorphism Utility */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-        }
+        .glass { background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); }
 
         /* =========================================
            Navigation
@@ -108,13 +100,16 @@
             padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky;
             top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.03);
         }
-        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary); letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; }
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary); letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo i { color: var(--accent); animation: pulseGlow 3s infinite; font-size: 1.6rem; }
         .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; position: relative; }
-        .nav-links a:hover { color: var(--accent); }
+        
+        /* Active Nav Styling */
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
         .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--accent); transition: width 0.3s ease-out; }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        
         .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; }
 
         /* =========================================
@@ -130,14 +125,10 @@
         .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); margin-bottom: 1.5rem; line-height: 1.1; font-weight: 900; background: linear-gradient(to right, #ffffff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { font-size: 1.2rem; color: #cbd5e1; max-width: 800px; margin: 0 auto; line-height: 1.8; font-weight: 300; }
 
-        .image-banner { width: 100%; padding: 8rem 5%; background-size: cover; background-position: center; background-attachment: fixed; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
-        .banner-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2,6,23,0.92), rgba(15,23,42,0.85)); z-index: 1; backdrop-filter: blur(5px); }
-        .banner-content { position: relative; z-index: 2; max-width: 900px; }
-
         /* =========================================
            Stats Grid
            ========================================= */
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; padding: 0 5%; margin-top: -6rem; position: relative; z-index: 10; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; padding: 0 5%; margin-top: -6rem; position: relative; z-index: 10; margin-bottom: 5rem; }
         .stat-card { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .stat-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.2rem; filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3)); }
         .stat-value { font-size: 3.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
@@ -147,12 +138,12 @@
         /* =========================================
            General Sections & Split Layouts
            ========================================= */
-        section { padding: 7rem 5%; }
+        section { padding: 6rem 5%; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--primary); margin-bottom: 1.2rem; font-weight: 900; letter-spacing: -1px; }
         .section-header p { font-size: 1.15rem; color: var(--text-main); max-width: 800px; margin: 0 auto; line-height: 1.8; }
 
-        .split-section { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .split-section { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-bottom: 5rem; }
         .split-image-container { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.1); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .split-image-container:hover { transform: scale(1.02) rotateY(-3deg); perspective: 1000px; }
         .split-image { width: 100%; display: block; object-fit: cover; }
@@ -162,7 +153,7 @@
         /* =========================================
            Timeline Grid (How to Engage)
            ========================================= */
-        .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+        .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
         .timeline-card { padding: 3rem 2rem; border-radius: 20px; position: relative; overflow: hidden; }
         .step-number { position: absolute; top: -15px; right: -10px; font-size: 8rem; font-weight: 900; color: rgba(14, 165, 233, 0.04); line-height: 1; transition: color 0.5s; z-index: 0; }
         .flow-box:hover .step-number { color: rgba(14, 165, 233, 0.1); }
@@ -173,7 +164,7 @@
         /* =========================================
            Tabs & The Delivery Pod
            ========================================= */
-        .tab-container { max-width: 1100px; margin: 0 auto; border-radius: 20px; overflow: hidden; }
+        .tab-container { max-width: 1100px; margin: 0 auto; border-radius: 20px; overflow: hidden; margin-bottom: 3rem; }
         .tab-buttons { display: flex; border-bottom: 1px solid rgba(255,255,255,0.4); flex-wrap: wrap; background: rgba(255,255,255,0.3); }
         .tab-btn { flex: 1; min-width: 200px; padding: 1.8rem 1rem; border: none; background: transparent; font-size: 1.1rem; font-weight: 800; color: var(--text-main); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .tab-btn:hover { background: rgba(255,255,255,0.8); color: var(--accent); }
@@ -213,13 +204,13 @@
         /* =========================================
            Contact Form
            ========================================= */
-        .contact-container { max-width: 650px; margin: 0 auto; background: white; padding: 4rem 3.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+        .contact-container { max-width: 650px; margin: 0 auto; background: white; padding: 4rem 3.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0,0,0,0.05); position: relative; overflow: hidden; margin-bottom: 3rem; }
         .contact-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--gradient-flow); background-size: 200% 200%; animation: gradientMove 3s ease infinite; }
         .form-group { margin-bottom: 2rem; }
         .form-group label { display: block; margin-bottom: 0.8rem; font-weight: 800; color: var(--primary); font-size: 1.05rem; }
         .form-group input, .form-group textarea { width: 100%; padding: 1.2rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s; background: var(--bg-base); }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); background: white; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
-        .submit-btn { width: 100%; padding: 1.2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: all 0.4s; text-transform: uppercase; letter-spacing: 1px; }
+        .submit-btn { width: 100%; padding: 1.5rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: all 0.4s; text-transform: uppercase; letter-spacing: 1px; }
         .submit-btn:hover { background: var(--accent); box-shadow: 0 15px 30px var(--accent-glow); transform: translateY(-2px); }
 
         /* =========================================
@@ -230,7 +221,7 @@
         .footer-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5rem; flex-wrap: wrap; gap: 3rem; }
         .footer-heading { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin: 0; color: white; }
         
-        .newsletter-box { background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); max-width: 450px; backdrop-filter: blur(10px); }
+        .newsletter-box { background: rgba(255,255,255,0.03); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); max-width: 500px; backdrop-filter: blur(10px); }
         .newsletter-box h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: white; font-weight: 800; }
         .newsletter-box p { color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
         .nl-form { display: flex; gap: 10px; }
@@ -259,39 +250,39 @@
            ========================================= */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 3000; display: none; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.4s ease; }
         .modal-overlay.show { opacity: 1; }
-        .modal-content { background: rgba(255,255,255,0.98); width: 100%; max-width: 1050px; max-height: 85vh; border-radius: 24px; padding: 4rem; overflow-y: auto; position: relative; animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 40px 100px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); }
-        .modal-content::-webkit-scrollbar { width: 8px; }
-        .modal-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-        .close-modal { position: absolute; top: 25px; right: 25px; font-size: 1.6rem; cursor: pointer; color: var(--primary); background: var(--bg-base); width: 45px; height: 45px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 10; }
-        .close-modal:hover { color: white; background: var(--accent); transform: rotate(90deg); box-shadow: 0 8px 20px var(--accent-glow); }
-        .modal-header-title { font-size: 2.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1.5rem; display: inline-block; line-height: 1.1; letter-spacing: -1px; }
+        .modal-content { background: rgba(255,255,255,0.98); width: 100%; max-width: 1050px; max-height: 85vh; border-radius: 24px; padding: 5rem; overflow-y: auto; position: relative; animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 40px 100px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); }
+        .modal-content::-webkit-scrollbar { width: 12px; }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 6px; border: 3px solid white; }
+        .close-modal { position: absolute; top: 30px; right: 35px; font-size: 2rem; cursor: pointer; color: var(--primary); background: white; width: 55px; height: 55px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; transition: all 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 10; }
+        .close-modal:hover { color: white; background: var(--accent); transform: rotate(180deg); box-shadow: 0 10px 25px var(--accent-glow); }
+        .modal-header-title { font-size: 3.5rem; font-weight: 900; color: var(--primary); margin-bottom: 2rem; display: inline-block; line-height: 1.1; letter-spacing: -1px; }
 
-        .tech-detail-body p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; color: var(--text-main); }
+        .tech-detail-body p { margin-bottom: 2rem; font-size: 1.2rem; line-height: 1.8; color: var(--text-main); }
         
         /* Modal Internal Grids */
-        .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 2.5rem; }
-        .modal-card { background: white; padding: 2.5rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.03); transition: all 0.4s; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
-        .modal-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(14, 165, 233, 0.12); }
-        .modal-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem; transition: transform 0.4s; }
-        .modal-card:hover i { transform: scale(1.1); color: var(--primary); }
-        .modal-card h3 { font-size: 1.5rem; font-weight: 900; margin-bottom: 0.8rem; color: var(--primary); }
-        .modal-card p, .modal-card a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; line-height: 1.6; }
-        .modal-card a { font-weight: 800; font-size: 1.2rem; color: var(--primary); margin-top: 1rem; }
+        .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-top: 3rem; }
+        .modal-card { background: white; padding: 3rem; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: all 0.4s; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
+        .modal-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 25px 50px rgba(14, 165, 233, 0.15); }
+        .modal-card i { font-size: 4rem; color: var(--accent); margin-bottom: 2rem; transition: transform 0.4s; }
+        .modal-card:hover i { transform: scale(1.15); color: var(--primary); }
+        .modal-card h3 { font-size: 1.8rem; font-weight: 900; margin-bottom: 1rem; color: var(--primary); }
+        .modal-card p, .modal-card a { color: var(--text-main); text-decoration: none; font-size: 1.15rem; line-height: 1.7; }
+        .modal-card a { font-weight: 800; font-size: 1.4rem; color: var(--primary); margin-top: 1rem; }
         .modal-card a:hover { color: var(--accent); text-decoration: underline; }
 
         .img-card { padding: 0; overflow: hidden; align-items: stretch; text-align: left; }
-        .img-card .img-container { height: 220px; overflow: hidden; position: relative; }
+        .img-card .img-container { height: 250px; overflow: hidden; position: relative; }
         .img-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
-        .img-card:hover img { transform: scale(1.1); }
-        .img-card .body { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .img-card .metric { display: inline-block; background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.85rem; align-self: flex-start; letter-spacing: 1px; margin-top: auto; }
+        .img-card:hover img { transform: scale(1.15); }
+        .img-card .body { padding: 2.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .img-card .metric { display: inline-block; background: var(--primary); color: white; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 800; font-size: 0.95rem; align-self: flex-start; letter-spacing: 1px; margin-top: auto; }
 
         /* Floating Socials */
-        .floating-socials { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 12px; z-index: 2500; }
-        .social-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
-        .social-btn:hover { transform: translateY(-8px) scale(1.1); color: white; border-color: transparent; }
-        .social-btn.whatsapp:hover { background: #25D366; box-shadow: 0 12px 25px rgba(37, 211, 102, 0.3); }
-        .social-btn.linkedin:hover { background: #0077b5; box-shadow: 0 12px 25px rgba(0, 119, 181, 0.3); }
+        .floating-socials { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 2500; }
+        .social-btn { width: 60px; height: 60px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
+        .social-btn:hover { transform: translateY(-10px) scale(1.15); color: white; border-color: transparent; }
+        .social-btn.whatsapp:hover { background: #25D366; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4); }
+        .social-btn.linkedin:hover { background: #0077b5; box-shadow: 0 15px 30px rgba(0, 119, 181, 0.4); }
 
         /* =========================================
            MOBILE SPECIFIC OPTIMIZATIONS
@@ -341,227 +332,244 @@
 </head>
 <body>
 
+    <!-- Top Navigation -->
     <nav class="glass">
-        <div class="logo"><i class="fa-solid fa-layer-group"></i> CAELION</div>
+        <div class="logo" onclick="window.location.hash='#home'; router();"><i class="fa-solid fa-layer-group"></i> CAELION</div>
         <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
         <ul class="nav-links" id="nav-links">
-            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
-            <li><a href="#philosophy" onclick="toggleMenu()">Philosophy</a></li>
-            <li><a href="#engagement" onclick="toggleMenu()">Engagement</a></li>
-            <li><a href="#standards" onclick="toggleMenu()">Standards</a></li>
-            <li><a href="#stack" onclick="toggleMenu()">Tech Stack</a></li>
-            <li><a href="#contact" onclick="toggleMenu()">Contact HR</a></li>
+            <li><a href="#home" target="_blank" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#philosophy" target="_blank" onclick="toggleMenu()">Philosophy</a></li>
+            <li><a href="#engagement" target="_blank" onclick="toggleMenu()">Engagement</a></li>
+            <li><a href="#standards" target="_blank" onclick="toggleMenu()">Standards</a></li>
+            <li><a href="#stack" target="_blank" onclick="toggleMenu()">Tech Stack</a></li>
+            <li><a href="#contact" target="_blank" onclick="toggleMenu()">Contact HR</a></li>
         </ul>
     </nav>
 
-    <section id="home" class="hero">
-        <h1 class="reveal">AI-Native Custom Software Engineering</h1>
-        <p class="reveal reveal-delay-1">We architect, build, and operate custom software systems, AI-native platforms, and intelligent automation for enterprises that can't afford to wait. No staffing. No lock-in. Working software every 2 weeks.</p>
-    </section>
+    <!-- Main Dynamic Content Wrapper -->
+    <main id="main-content">
+        
+        <!-- PAGE 1: HOME -->
+        <div id="home" class="page-section">
+            <section class="hero">
+                <h1 class="reveal">AI-Native Custom Software Engineering</h1>
+                <p class="reveal reveal-delay-1">We architect, build, and operate custom software systems, AI-native platforms, and intelligent automation for enterprises that can't afford to wait. No staffing. No lock-in. Working software every 2 weeks.</p>
+            </section>
 
-    <div class="stats reveal reveal-delay-2">
-        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-rocket stat-icon"></i><div class="stat-value"><span>3.4x</span></div><h3>Faster Delivery</h3><p>AI-augmented SDLC vs. traditional engineering teams</p></div></div>
-        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-stopwatch stat-icon"></i><div class="stat-value"><span>60-80%</span></div><h3>Cycle Time Reduction</h3><p>Measured across IT ops, customer service, and data automation</p></div></div>
-        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-triangle-exclamation stat-icon"></i><div class="stat-value"><span>87%</span></div><h3>Enterprises Not AI-Ready</h3><p>Lack production ML pipelines. Caelion closes that gap fast.</p></div></div>
-        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-user-shield stat-icon"></i><div class="stat-value"><span>100%</span></div><h3>Senior Engineers</h3><p>Every pod member has 6+ years of production experience</p></div></div>
-    </div>
-
-    <section id="philosophy" class="split-section">
-        <div class="split-content reveal">
-            <h2>Our AI-Native Design Philosophy</h2>
-            <p>At CAELION, our approach to software engineering is rooted in a deliberate and advanced design philosophy, ensuring that every solution we craft is not merely functional but also intelligent, scalable, and future-proof.</p>
-            <p>We eliminate corporate bloat and middle management layers, replacing them with high-velocity, autonomous engineering pods. By doing so, we deliver robust digital architectures and full repository ownership straight into the hands of your technical leads.</p>
-            <blockquote>"Every technology choice is deliberate—optimized for performance, maintainability, and long-term viability. No hype. No lock-in."</blockquote>
-        </div>
-        <div class="split-image-container reveal reveal-delay-1">
-            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1000&auto=format&fit=crop" alt="Modern AI Workspace" class="split-image">
-        </div>
-    </section>
-
-    <section id="how-to-engage" class="glass" style="margin: 4rem 5%; border-radius: 30px;">
-        <div class="section-header reveal">
-            <h2>How To Engage</h2>
-            <p>We provide structured, high-velocity engineering paths. Choose the model that accelerates your immediate enterprise roadmap.</p>
-        </div>
-        <div class="timeline-grid reveal reveal-delay-1">
-            <div class="flow-box"><div class="flow-inner timeline-card">
-                <span class="step-number">1</span><span class="timeline-tag">Start Here</span>
-                <h3>Rapid Assessment</h3><p>2-4 week fixed-fee sprint. We provide an architecture audit, risk register, AI-readiness scorecard, and a prioritized modernization roadmap.</p>
-            </div></div>
-            <div class="flow-box"><div class="flow-inner timeline-card">
-                <span class="step-number">2</span><span class="timeline-tag">Most Common</span>
-                <h3>Project Engagement</h3><p>Fixed-scope delivery. We guarantee working software every sprint. Includes full runbooks, architecture docs, and knowledge transfer at close.</p>
-            </div></div>
-            <div class="flow-box"><div class="flow-inner timeline-card">
-                <span class="step-number">3</span><span class="timeline-tag">Highest Impact</span>
-                <h3>Capability Pod</h3><p>Embedded monthly retainer utilizing 3-8+ senior engineers. Velocity is strictly tracked via DORA metrics. Scales directly with your roadmap.</p>
-            </div></div>
-            <div class="flow-box"><div class="flow-inner timeline-card">
-                <span class="step-number">4</span><span class="timeline-tag">Long-Term</span>
-                <h3>Advisory Retainer</h3><p>Fractional CTO deployment. Includes monthly architecture reviews, technology strategy, and maintaining a running Architecture Decision Log.</p>
-            </div></div>
-        </div>
-    </section>
-
-    <section id="engagement">
-        <div class="section-header reveal">
-            <h2>The Delivery Pod Architecture</h2>
-            <p>Every engagement runs on a cross-functional Delivery Pod—self-contained, autonomous, shipping every 2 weeks. Senior engineers only. No juniors. No bait-and-switch.</p>
-        </div>
-
-        <div class="tab-container glass reveal reveal-delay-1">
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="openTab(event, 'build', 'main-tab')"><i class="fa-solid fa-code"></i> What We Build</button>
-                <button class="tab-btn" onclick="openTab(event, 'pod', 'main-tab')"><i class="fa-solid fa-users-gear"></i> Pod Structure</button>
-            </div>
-
-            <div id="build" class="tab-content main-tab active">
-                <ul class="feature-list">
-                    <li>
-                        <strong>Custom Software Products</strong>
-                        <p>Web apps, mobile apps, SaaS platforms, and internal tools—engineered end-to-end with full CI/CD, observability, and production hardening.</p>
-                    </li>
-                    <li>
-                        <strong>AI-Native Platforms</strong>
-                        <p>LLM integrations, RAG pipelines, agent workflows, and model-serving infrastructure. AI embedded in every layer, not bolted on.</p>
-                    </li>
-                    <li>
-                        <strong>Legacy Modernization</strong>
-                        <p>Strangler-fig decomposition of monoliths into cloud-native microservices. No big-bang rewrites. No business disruption.</p>
-                    </li>
-                    <li>
-                        <strong>Intelligent Automation</strong>
-                        <p>Context-aware workflow automation, integration orchestration, and AI decision support—cutting manual cycle times by 60-80%.</p>
-                    </li>
-                </ul>
-            </div>
-
-            <div id="pod" class="tab-content main-tab">
-                <ul class="feature-list">
-                    <li><strong>Pod Lead / Architect</strong><br>Owns technical direction, architecture decisions, and client outcomes. Staff or Principal Engineer level.</li>
-                    <li><strong>Full-Stack Engineers (2-4)</strong><br>Senior engineers across frontend, backend, and API layers. All write tests and own their code in production.</li>
-                    <li><strong>AI/ML Engineer</strong><br>LLM Integrations, agent workflows, RAG pipelines, and feature engineering. Bridges data science and production.</li>
-                    <li><strong>Platform/DevOps & QA</strong><br>IaC, Kubernetes, CI/CD, and observability. Production-hardened, cost-optimized, operationally sound. Shift-left QA culture.</li>
-                </ul>
+            <div class="stats reveal reveal-delay-2">
+                <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-rocket stat-icon"></i><div class="stat-value"><span>3.4x</span></div><h3>Faster Delivery</h3><p>AI-augmented SDLC vs. traditional engineering teams</p></div></div>
+                <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-stopwatch stat-icon"></i><div class="stat-value"><span>60-80%</span></div><h3>Cycle Time Reduction</h3><p>Measured across IT ops, customer service, and data automation</p></div></div>
+                <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-triangle-exclamation stat-icon"></i><div class="stat-value"><span>87%</span></div><h3>Enterprises Not AI-Ready</h3><p>Lack production ML pipelines. Caelion closes that gap fast.</p></div></div>
+                <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-user-shield stat-icon"></i><div class="stat-value"><span>100%</span></div><h3>Senior Engineers</h3><p>Every pod member has 6+ years of production experience</p></div></div>
             </div>
         </div>
-    </section>
 
-    <div class="image-banner reveal">
-        <div class="banner-overlay"></div>
-        <div class="banner-content">
-            <h2 style="font-size: 4rem; margin-bottom: 1rem; font-weight: 900;">Engineered to Last.</h2>
-            <p style="font-size: 1.4rem; max-width: 900px; margin: 0 auto; line-height: 1.8;">Optimized for extreme performance, long-term maintainability, and total cloud-agnostic viability. No hype. No lock-in.</p>
-        </div>
-    </div>
-
-    <section id="standards">
-        <div class="section-header reveal">
-            <h2>Engineering Standards</h2>
-            <p>Our pods operate under immutable delivery laws. We don't negotiate on code quality.</p>
-        </div>
-        <div class="tab-container glass reveal reveal-delay-1" style="background: transparent; border: none; box-shadow: none;">
-            <ul class="feature-list">
-                <li class="glass"><i class="fa-solid fa-code-commit" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>1. Code Quality (ENFORCED)</strong> ESLint / SonarQube gates. Cyclomatic complexity limits. PR reviews on every merge.</li>
-                <li class="glass"><i class="fa-solid fa-vial-circle-check" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>2. Test Coverage (80% MIN)</strong> Unit, Integration, E2E, and contract tests required. Automated in CI on every commit.</li>
-                <li class="glass"><i class="fa-solid fa-shield-virus" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>3. Security Scanning (EVERY BUILD)</strong> SAST/DAST, Snyk CVE scanning, OWASP Top 10, secrets scanning on every push.</li>
-                <li class="glass"><i class="fa-solid fa-satellite-dish" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>4. Observability (DAY ONE)</strong> Structured logging, distributed tracing, dashboards, and runbooks before go-live.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="stack">
-        <div class="section-header reveal">
-            <h2>Our Full-Stack Technology Depth</h2>
-            <p>Caelion engineers are opinionated about tooling—we choose battle-tested, cloud-native technologies with strong community support and long-term viability. Click any technology to explore our architectural integration methodologies.</p>
+        <!-- PAGE 2: PHILOSOPHY -->
+        <div id="philosophy" class="page-section">
+            <section class="split-section" style="padding-top: 6rem;">
+                <div class="split-content reveal">
+                    <h2>Our AI-Native Design Philosophy</h2>
+                    <p>At CAELION, our approach to software engineering is rooted in a deliberate and advanced design philosophy, ensuring that every solution we craft is not merely functional but also intelligent, scalable, and future-proof.</p>
+                    <p>We eliminate corporate bloat and middle management layers, replacing them with high-velocity, autonomous engineering pods. By doing so, we deliver robust digital architectures and full repository ownership straight into the hands of your technical leads.</p>
+                    <blockquote style="border-left: 5px solid var(--accent); padding-left: 1.5rem; font-size: 1.2rem; font-style: italic; color: var(--primary); margin-top: 2rem; background: rgba(14, 165, 233, 0.05); padding: 1.5rem; border-radius: 0 12px 12px 0;">"Every technology choice is deliberate—optimized for performance, maintainability, and long-term viability. No hype. No lock-in."</blockquote>
+                </div>
+                <div class="split-image-container reveal reveal-delay-1">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1000&auto=format&fit=crop" alt="Modern AI Workspace" class="split-image">
+                </div>
+            </section>
         </div>
 
-        <h3 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 2.2rem; font-weight: 900;">WHAT WE SHIP WITH</h3>
-        <div class="tech-stats-container reveal reveal-delay-1">
-            <div class="ts-card"><div class="ts-val">6</div><div class="ts-title">Technology Categories</div><div class="ts-desc">Frontend, backend, data, AI/ML, cloud, and observability—full-spectrum coverage.</div></div>
-            <div class="ts-card"><div class="ts-val">9+</div><div class="ts-title">Tools Per Category</div><div class="ts-desc">Deep expertise across every layer of the modern enterprise stack.</div></div>
-            <div class="ts-card"><div class="ts-val">100%</div><div class="ts-title">Open Standards</div><div class="ts-desc">No proprietary lock-in. Full source code and docs handed over at close.</div></div>
-            <div class="ts-card"><div class="ts-val">3</div><div class="ts-title">Cloud Platforms</div><div class="ts-desc">AWS, Azure, and GCP—cloud-agnostic by design, no vendor lock-in.</div></div>
-        </div>
+        <!-- PAGE 3: ENGAGEMENT -->
+        <div id="engagement" class="page-section">
+            <section class="glass" style="margin: 4rem 5%; border-radius: 30px;">
+                <div class="section-header reveal">
+                    <h2>How To Engage</h2>
+                    <p>We provide structured, high-velocity engineering paths. Choose the model that accelerates your immediate enterprise roadmap.</p>
+                </div>
+                <div class="timeline-grid reveal reveal-delay-1">
+                    <div class="flow-box"><div class="flow-inner timeline-card">
+                        <span class="step-number">1</span><span class="timeline-tag">Start Here</span>
+                        <h3>Rapid Assessment</h3><p>2-4 week fixed-fee sprint. We provide an architecture audit, risk register, AI-readiness scorecard, and a prioritized modernization roadmap.</p>
+                    </div></div>
+                    <div class="flow-box"><div class="flow-inner timeline-card">
+                        <span class="step-number">2</span><span class="timeline-tag">Most Common</span>
+                        <h3>Project Engagement</h3><p>Fixed-scope delivery. We guarantee working software every sprint. Includes full runbooks, architecture docs, and knowledge transfer at close.</p>
+                    </div></div>
+                    <div class="flow-box"><div class="flow-inner timeline-card">
+                        <span class="step-number">3</span><span class="timeline-tag">Highest Impact</span>
+                        <h3>Capability Pod</h3><p>Embedded monthly retainer utilizing 3-8+ senior engineers. Velocity is strictly tracked via DORA metrics. Scales directly with your roadmap.</p>
+                    </div></div>
+                    <div class="flow-box"><div class="flow-inner timeline-card">
+                        <span class="step-number">4</span><span class="timeline-tag">Long-Term</span>
+                        <h3>Advisory Retainer</h3><p>Fractional CTO deployment. Includes monthly architecture reviews, technology strategy, and maintaining a running Architecture Decision Log.</p>
+                    </div></div>
+                </div>
+            </section>
 
-        <div class="tab-container reveal reveal-delay-2" style="border: none; box-shadow: none; background: transparent;">
-            <div class="tab-content active" style="display: block; padding: 0; background: transparent;">
-                
-                <div class="sub-tab-buttons">
-                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'frontend')">Frontend</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'backend')">Backend & APIs</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'ai')">AI & ML</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'data')">Data & Storage</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'cloud')">Cloud & DevOps</button>
+            <section>
+                <div class="section-header reveal">
+                    <h2>The Delivery Pod Architecture</h2>
+                    <p>Every engagement runs on a cross-functional Delivery Pod—self-contained, autonomous, shipping every 2 weeks. Senior engineers only. No juniors. No bait-and-switch.</p>
                 </div>
 
-                <div id="frontend" class="tech-grid sub-tab-content">
-                    <div class="tech-item glass" onclick="openDataModal('react')"><i class="fa-brands fa-react"></i> React / Next.js</div>
-                    <div class="tech-item glass" onclick="openDataModal('vue')"><i class="fa-brands fa-vuejs"></i> Vue</div>
-                    <div class="tech-item glass" onclick="openDataModal('ts')"><i class="fa-brands fa-js"></i> TypeScript</div>
-                    <div class="tech-item glass" onclick="openDataModal('flutter')"><i class="fa-solid fa-mobile-screen"></i> Flutter / React Native</div>
-                    <div class="tech-item glass" onclick="openDataModal('tailwind')"><i class="fa-solid fa-wind"></i> Tailwind / Vite</div>
-                </div>
-
-                <div id="backend" class="tech-grid sub-tab-content" style="display: none;">
-                    <div class="tech-item glass" onclick="openDataModal('node')"><i class="fa-brands fa-node-js"></i> Node.js</div>
-                    <div class="tech-item glass" onclick="openDataModal('dotnet')"><i class="fa-brands fa-microsoft"></i> .NET 8</div>
-                    <div class="tech-item glass" onclick="openDataModal('go')"><i class="fa-brands fa-golang"></i> Go</div>
-                    <div class="tech-item glass" onclick="openDataModal('python')"><i class="fa-brands fa-python"></i> Python / FastAPI</div>
-                    <div class="tech-item glass" onclick="openDataModal('graphql')"><i class="fa-solid fa-diagram-project"></i> Spring Boot / GraphQL</div>
-                </div>
-
-                <div id="ai" class="tech-grid sub-tab-content" style="display: none;">
-                    <div class="tech-item glass" onclick="openDataModal('openai')"><i class="fa-solid fa-brain"></i> OpenAI / Claude</div>
-                    <div class="tech-item glass" onclick="openDataModal('langchain')"><i class="fa-solid fa-link"></i> LangChain / LangGraph</div>
-                    <div class="tech-item glass" onclick="openDataModal('pinecone')"><i class="fa-solid fa-database"></i> Pinecone / Weaviate</div>
-                    <div class="tech-item glass" onclick="openDataModal('huggingface')"><i class="fa-solid fa-face-smile"></i> vLLM / Hugging Face</div>
-                </div>
-
-                <div id="data" class="tech-grid sub-tab-content" style="display: none;">
-                    <div class="tech-item glass" onclick="openDataModal('postgres')"><i class="fa-solid fa-database"></i> PostgreSQL</div>
-                    <div class="tech-item glass" onclick="openDataModal('mongo')"><i class="fa-solid fa-envira"></i> MongoDB</div>
-                    <div class="tech-item glass" onclick="openDataModal('redis')"><i class="fa-solid fa-memory"></i> Redis</div>
-                    <div class="tech-item glass" onclick="openDataModal('snowflake')"><i class="fa-solid fa-snowflake"></i> Snowflake / BigQuery</div>
-                </div>
-
-                <div id="cloud" class="tech-grid sub-tab-content" style="display: none; flex-direction: column; align-items: center;">
-                    <h4 class="tech-group-title">Cloud Platforms</h4>
-                    <div class="tech-grid"><div class="tech-item glass" onclick="openDataModal('aws')"><i class="fa-brands fa-aws"></i> AWS / Azure / GCP</div></div>
-                    
-                    <h4 class="tech-group-title">CI/CD & GitOps</h4>
-                    <div class="tech-grid">
-                        <div class="tech-item glass" onclick="openDataModal('k8s')"><i class="fa-solid fa-dharmachakra"></i> Kubernetes / Istio</div>
-                        <div class="tech-item glass" onclick="openDataModal('terraform')"><i class="fa-solid fa-code-merge"></i> Terraform</div>
-                        <div class="tech-item glass" onclick="openDataModal('github')"><i class="fa-brands fa-github"></i> ArgoCD / GitHub Actions</div>
+                <div class="tab-container glass reveal reveal-delay-1">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="openTab(event, 'build', 'main-tab')"><i class="fa-solid fa-code"></i> What We Build</button>
+                        <button class="tab-btn" onclick="openTab(event, 'pod', 'main-tab')"><i class="fa-solid fa-users-gear"></i> Pod Structure</button>
                     </div>
 
-                    <h4 class="tech-group-title">Observability & Security</h4>
-                    <div class="tech-grid">
-                        <div class="tech-item glass" onclick="openDataModal('datadog')"><i class="fa-solid fa-dog"></i> Datadog / OpenTelemetry</div>
-                        <div class="tech-item glass" onclick="openDataModal('snyk')"><i class="fa-solid fa-shield-halved"></i> Snyk / Vault</div>
-                        <div class="tech-item glass" onclick="openDataModal('grafana')"><i class="fa-solid fa-chart-pie"></i> Grafana / Prometheus</div>
+                    <div id="build" class="tab-content main-tab active">
+                        <ul class="feature-list">
+                            <li>
+                                <strong>Custom Software Products</strong>
+                                <p>Web apps, mobile apps, SaaS platforms, and internal tools—engineered end-to-end with full CI/CD, observability, and production hardening.</p>
+                            </li>
+                            <li>
+                                <strong>AI-Native Platforms</strong>
+                                <p>LLM integrations, RAG pipelines, agent workflows, and model-serving infrastructure. AI embedded in every layer, not bolted on.</p>
+                            </li>
+                            <li>
+                                <strong>Legacy Modernization</strong>
+                                <p>Strangler-fig decomposition of monoliths into cloud-native microservices. No big-bang rewrites. No business disruption.</p>
+                            </li>
+                            <li>
+                                <strong>Intelligent Automation</strong>
+                                <p>Context-aware workflow automation, integration orchestration, and AI decision support—cutting manual cycle times by 60-80%.</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="pod" class="tab-content main-tab">
+                        <ul class="feature-list">
+                            <li><strong>Pod Lead / Architect</strong><br>Owns technical direction, architecture decisions, and client outcomes. Staff or Principal Engineer level.</li>
+                            <li><strong>Full-Stack Engineers (2-4)</strong><br>Senior engineers across frontend, backend, and API layers. All write tests and own their code in production.</li>
+                            <li><strong>AI/ML Engineer</strong><br>LLM Integrations, agent workflows, RAG pipelines, and feature engineering. Bridges data science and production.</li>
+                            <li><strong>Platform/DevOps & QA</strong><br>IaC, Kubernetes, CI/CD, and observability. Production-hardened, cost-optimized, operationally sound. Shift-left QA culture.</li>
+                        </ul>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-    </section>
 
-    <section id="contact" style="padding-top: 2rem;">
-        <div class="section-header reveal">
-            <h2>Ready to Accelerate?</h2>
-            <p>Connect with our engineering leadership to discuss your roadmap.</p>
+        <!-- PAGE 4: STANDARDS -->
+        <div id="standards" class="page-section">
+            <section style="padding-top: 6rem;">
+                <div class="section-header reveal">
+                    <h2>Engineering Standards</h2>
+                    <p>Our pods operate under immutable delivery laws. We don't negotiate on code quality.</p>
+                </div>
+                <div class="tab-container glass reveal reveal-delay-1" style="background: transparent; border: none; box-shadow: none;">
+                    <ul class="feature-list">
+                        <li class="glass"><i class="fa-solid fa-code-commit" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>1. Code Quality (ENFORCED)</strong> ESLint / SonarQube gates. Cyclomatic complexity limits. PR reviews on every merge.</li>
+                        <li class="glass"><i class="fa-solid fa-vial-circle-check" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>2. Test Coverage (80% MIN)</strong> Unit, Integration, E2E, and contract tests required. Automated in CI on every commit.</li>
+                        <li class="glass"><i class="fa-solid fa-shield-virus" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>3. Security Scanning (EVERY BUILD)</strong> SAST/DAST, Snyk CVE scanning, OWASP Top 10, secrets scanning on every push.</li>
+                        <li class="glass"><i class="fa-solid fa-satellite-dish" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>4. Observability (DAY ONE)</strong> Structured logging, distributed tracing, dashboards, and runbooks before go-live.</li>
+                    </ul>
+                </div>
+            </section>
         </div>
-        <div class="contact-container reveal reveal-delay-1">
-            <form onsubmit="event.preventDefault(); alert('Assessment Request Safely Transmitted via 256-bit AES Encryption Protocol.');">
-                <div class="form-group"><label>Full Name</label><input type="text" placeholder="e.g. Jane Doe" required></div>
-                <div class="form-group"><label>Email</label><input type="email" placeholder="e.g. director@enterprise.com" required></div>
-                <div class="form-group"><label>About Project</label><textarea rows="5" placeholder="Detail your microservices refactoring goals, AI pipeline needs, or mobile app specifications..." required></textarea></div>
-                <button type="submit" class="submit-btn">Request Send</button>
-            </form>
-        </div>
-    </section>
 
+        <!-- PAGE 5: TECH STACK -->
+        <div id="stack" class="page-section">
+            <section style="padding-top: 6rem;">
+                <div class="section-header reveal">
+                    <h2>Our Full-Stack Technology Depth</h2>
+                    <p>Caelion engineers are opinionated about tooling—we choose battle-tested, cloud-native technologies with strong community support and long-term viability. Click any technology to explore our architectural integration methodologies.</p>
+                </div>
+
+                <h3 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 2.2rem; font-weight: 900;">WHAT WE SHIP WITH</h3>
+                <div class="tech-stats-container reveal reveal-delay-1">
+                    <div class="ts-card"><div class="ts-val">6</div><div class="ts-title">Technology Categories</div><div class="ts-desc">Frontend, backend, data, AI/ML, cloud, and observability—full-spectrum coverage.</div></div>
+                    <div class="ts-card"><div class="ts-val">9+</div><div class="ts-title">Tools Per Category</div><div class="ts-desc">Deep expertise across every layer of the modern enterprise stack.</div></div>
+                    <div class="ts-card"><div class="ts-val">100%</div><div class="ts-title">Open Standards</div><div class="ts-desc">No proprietary lock-in. Full source code and docs handed over at close.</div></div>
+                    <div class="ts-card"><div class="ts-val">3</div><div class="ts-title">Cloud Platforms</div><div class="ts-desc">AWS, Azure, and GCP—cloud-agnostic by design, no vendor lock-in.</div></div>
+                </div>
+
+                <div class="tab-container reveal reveal-delay-2" style="border: none; box-shadow: none; background: transparent;">
+                    <div class="tab-content active" style="display: block; padding: 0; background: transparent;">
+                        
+                        <div class="sub-tab-buttons">
+                            <button class="sub-tab-btn active" onclick="openSubTab(event, 'frontend')">Frontend</button>
+                            <button class="sub-tab-btn" onclick="openSubTab(event, 'backend')">Backend & APIs</button>
+                            <button class="sub-tab-btn" onclick="openSubTab(event, 'ai')">AI & ML</button>
+                            <button class="sub-tab-btn" onclick="openSubTab(event, 'data')">Data & Storage</button>
+                            <button class="sub-tab-btn" onclick="openSubTab(event, 'cloud')">Cloud & DevOps</button>
+                        </div>
+
+                        <div id="frontend" class="tech-grid sub-tab-content">
+                            <div class="tech-item glass" onclick="openDataModal('react')"><i class="fa-brands fa-react"></i> React / Next.js</div>
+                            <div class="tech-item glass" onclick="openDataModal('vue')"><i class="fa-brands fa-vuejs"></i> Vue</div>
+                            <div class="tech-item glass" onclick="openDataModal('ts')"><i class="fa-brands fa-js"></i> TypeScript</div>
+                            <div class="tech-item glass" onclick="openDataModal('flutter')"><i class="fa-solid fa-mobile-screen"></i> Flutter / React Native</div>
+                            <div class="tech-item glass" onclick="openDataModal('tailwind')"><i class="fa-solid fa-wind"></i> Tailwind / Vite</div>
+                        </div>
+
+                        <div id="backend" class="tech-grid sub-tab-content" style="display: none;">
+                            <div class="tech-item glass" onclick="openDataModal('node')"><i class="fa-brands fa-node-js"></i> Node.js</div>
+                            <div class="tech-item glass" onclick="openDataModal('dotnet')"><i class="fa-brands fa-microsoft"></i> .NET 8</div>
+                            <div class="tech-item glass" onclick="openDataModal('go')"><i class="fa-brands fa-golang"></i> Go</div>
+                            <div class="tech-item glass" onclick="openDataModal('python')"><i class="fa-brands fa-python"></i> Python / FastAPI</div>
+                            <div class="tech-item glass" onclick="openDataModal('graphql')"><i class="fa-solid fa-diagram-project"></i> Spring Boot / GraphQL</div>
+                        </div>
+
+                        <div id="ai" class="tech-grid sub-tab-content" style="display: none;">
+                            <div class="tech-item glass" onclick="openDataModal('openai')"><i class="fa-solid fa-brain"></i> OpenAI / Claude</div>
+                            <div class="tech-item glass" onclick="openDataModal('langchain')"><i class="fa-solid fa-link"></i> LangChain / LangGraph</div>
+                            <div class="tech-item glass" onclick="openDataModal('pinecone')"><i class="fa-solid fa-database"></i> Pinecone / Weaviate</div>
+                            <div class="tech-item glass" onclick="openDataModal('huggingface')"><i class="fa-solid fa-face-smile"></i> vLLM / Hugging Face</div>
+                        </div>
+
+                        <div id="data" class="tech-grid sub-tab-content" style="display: none;">
+                            <div class="tech-item glass" onclick="openDataModal('postgres')"><i class="fa-solid fa-database"></i> PostgreSQL</div>
+                            <div class="tech-item glass" onclick="openDataModal('mongo')"><i class="fa-solid fa-envira"></i> MongoDB</div>
+                            <div class="tech-item glass" onclick="openDataModal('redis')"><i class="fa-solid fa-memory"></i> Redis</div>
+                            <div class="tech-item glass" onclick="openDataModal('snowflake')"><i class="fa-solid fa-snowflake"></i> Snowflake / BigQuery</div>
+                        </div>
+
+                        <div id="cloud" class="tech-grid sub-tab-content" style="display: none; flex-direction: column; align-items: center;">
+                            <h4 class="tech-group-title">Cloud Platforms</h4>
+                            <div class="tech-grid"><div class="tech-item glass" onclick="openDataModal('aws')"><i class="fa-brands fa-aws"></i> AWS / Azure / GCP</div></div>
+                            
+                            <h4 class="tech-group-title">CI/CD & GitOps</h4>
+                            <div class="tech-grid">
+                                <div class="tech-item glass" onclick="openDataModal('k8s')"><i class="fa-solid fa-dharmachakra"></i> Kubernetes / Istio</div>
+                                <div class="tech-item glass" onclick="openDataModal('terraform')"><i class="fa-solid fa-code-merge"></i> Terraform</div>
+                                <div class="tech-item glass" onclick="openDataModal('github')"><i class="fa-brands fa-github"></i> ArgoCD / GitHub Actions</div>
+                            </div>
+
+                            <h4 class="tech-group-title">Observability & Security</h4>
+                            <div class="tech-grid">
+                                <div class="tech-item glass" onclick="openDataModal('datadog')"><i class="fa-solid fa-dog"></i> Datadog / OpenTelemetry</div>
+                                <div class="tech-item glass" onclick="openDataModal('snyk')"><i class="fa-solid fa-shield-halved"></i> Snyk / Vault</div>
+                                <div class="tech-item glass" onclick="openDataModal('grafana')"><i class="fa-solid fa-chart-pie"></i> Grafana / Prometheus</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 6: CONTACT HR -->
+        <div id="contact" class="page-section">
+            <section style="padding-top: 6rem;">
+                <div class="section-header reveal">
+                    <h2>Ready to Accelerate?</h2>
+                    <p>Connect with our engineering leadership to discuss your roadmap.</p>
+                </div>
+                <div class="contact-container reveal reveal-delay-1">
+                    <form onsubmit="event.preventDefault(); alert('Assessment Request Safely Transmitted via 256-bit AES Encryption Protocol.');">
+                        <div class="form-group"><label>Full Name</label><input type="text" placeholder="e.g. Chennakesava" required></div>
+                        <div class="form-group"><label>Email</label><input type="email" placeholder="e.g. director@enterprise.com" required></div>
+                        <div class="form-group"><label>About Project</label><textarea rows="5" placeholder="Detail your microservices refactoring goals, AI pipeline needs, or mobile app specifications..." required></textarea></div>
+                        <button type="submit" class="submit-btn">Request Send</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Dynamic Enterprise Footer Layout -->
     <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-top-row reveal">
@@ -570,7 +578,7 @@
                     <h3>Engineering Insights Newsletter</h3>
                     <p>Join tech leaders receiving weekly system architecture blueprints and LLM implementation guides directly from our principal engineers.</p>
                     <div class="nl-form">
-                        <input type="email" placeholder="Enter the  email..." required>
+                        <input type="email" placeholder="Enter the email..." required>
                         <button type="button" onclick="alert('Subscribed successfully to CAELION engineering updates.')">Subscribe</button>
                     </div>
                 </div>
@@ -627,26 +635,34 @@
                 <a onclick="openDataModal('legal_cookie')" target="_blank">Cookie Notice <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a>
             </div>
             
+            <!-- CAELION FOOTER BRAND TEXT FROM IMAGE -->
             <div class="footer-brand-text">CAELION — caelion.in | info@caelion.in</div>
             
             <p class="copyright">© 2026. CAELION Custom Software Engineering - caelion.in | All architectural blueprints strictly regulated.</p>
         </div>
     </footer>
 
+    <!-- Floating Social Controls -->
     <div class="floating-socials">
         <a href="https://wa.me/917989004552" target="_blank" class="social-btn whatsapp glass" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://linkedin.com" target="_blank" class="social-btn linkedin glass" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     </div>
 
+    <!-- =========================================
+         RICH INTERACTIVE MODALS (LONG DATA INTEGRATION)
+         ========================================= -->
+
+    <!-- Dynamic "Long Data" Tech Stack Modal -->
     <div id="dynamic-data-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'dynamic-data-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('dynamic-data-modal')"><i class="fa-solid fa-xmark"></i></button>
-            <i id="dd-modal-icon" class="fa-brands fa-react" style="font-size: 4rem; color: var(--accent); margin-bottom: 1.5rem; display: block; text-align: center;"></i>
+            <i id="dd-modal-icon" class="fa-brands fa-react" style="font-size: 4.5rem; color: var(--accent); margin-bottom: 1.5rem; display: block; text-align: center;"></i>
             <h2 id="dd-modal-title" class="modal-header-title" style="display: block; text-align: center;">Technology</h2>
             <div id="dd-modal-body" class="tech-detail-body" style="margin-top: 2.5rem;"></div>
         </div>
     </div>
 
+    <!-- Rich Contact Details Modal -->
     <div id="contact-details-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'contact-details-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('contact-details-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -675,6 +691,7 @@
         </div>
     </div>
 
+    <!-- Rich Case Studies Modal -->
     <div id="case-studies-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'case-studies-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('case-studies-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -708,6 +725,7 @@
         </div>
     </div>
 
+    <!-- Rich Industries Modal -->
     <div id="industries-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'industries-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('industries-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -738,6 +756,7 @@
         </div>
     </div>
 
+    <!-- Rich Careers Modal -->
     <div id="careers-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'careers-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('careers-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -772,6 +791,7 @@
         </div>
     </div>
 
+    <!-- Long Data Text Modals -->
     <div id="about-caelion-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'about-caelion-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('about-caelion-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -818,6 +838,7 @@
         </div>
     </div>
 
+    <!-- Application Script Logic & Single Page Router -->
     <script>
         // LONG DATA DICTIONARY 
         const modalData = {
@@ -856,8 +877,8 @@
         };
 
         // Scroll Observers
-        document.addEventListener("DOMContentLoaded", function() {
-            const reveals = document.querySelectorAll(".reveal");
+        function initObservers() {
+            const reveals = document.querySelectorAll(".reveal:not(.active)");
             const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
             const revealObserver = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(entry => {
@@ -868,9 +889,61 @@
                 });
             }, revealOptions);
             reveals.forEach(reveal => { revealObserver.observe(reveal); });
-        });
+        }
 
-        // Tab & Navigation Logic
+        // =========================================
+        // Hash Router Implementation
+        // =========================================
+        function router() {
+            let hash = window.location.hash || '#home';
+            
+            // Hide all pages and remove active classes
+            document.querySelectorAll('.page-section').forEach(sec => {
+                sec.classList.remove('active-page');
+                sec.style.display = 'none';
+            });
+
+            // Reset specific reveal animations so they re-trigger on new pages
+            document.querySelectorAll('.reveal').forEach(el => el.classList.remove('active'));
+
+            if (hash === '#home') {
+                // If Home, display ALL sections sequentially to show total data
+                document.querySelectorAll('.page-section').forEach(sec => {
+                    sec.style.display = 'block';
+                    setTimeout(() => sec.classList.add('active-page'), 10);
+                });
+            } else {
+                // Show ONLY the specific section requested
+                const activeSection = document.querySelector(hash);
+                if (activeSection && activeSection.classList.contains('page-section')) {
+                    activeSection.style.display = 'block';
+                    setTimeout(() => activeSection.classList.add('active-page'), 10);
+                } else {
+                    // Fallback to home (show all)
+                    document.querySelectorAll('.page-section').forEach(sec => {
+                        sec.style.display = 'block';
+                        setTimeout(() => sec.classList.add('active-page'), 10);
+                    });
+                    hash = '#home';
+                }
+            }
+
+            // Update Nav visual state
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === hash) {
+                    link.classList.add('active');
+                }
+            });
+
+            window.scrollTo(0,0);
+            setTimeout(initObservers, 50); // Re-init observers for the new page layout
+        }
+
+        window.addEventListener('hashchange', router);
+        window.addEventListener('load', router);
+
+        // Standard UI Functions
         function toggleMenu() {
             const nav = document.getElementById('nav-links');
             if(window.innerWidth <= 768) nav.classList.toggle('active');
@@ -900,7 +973,6 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // Modal Handlers
         function openDataModal(key) {
             const data = modalData[key];
             if(!data) return;
