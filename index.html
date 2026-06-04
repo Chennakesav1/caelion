@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAELION | Advanced AI-Native Software Engineering</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* =========================================
+           Premium Design System & Variables
+           ========================================= */
+        :root {
+            --primary: #0f172a; 
+            --secondary: #1e293b;
+            --accent: #0ea5e9; 
+            --accent-glow: rgba(14, 165, 233, 0.4);
+            --bg-base: #f1f5f9;
+            --bg-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #334155;
+            --text-light: #94a3b8;
+            --gradient-flow: linear-gradient(270deg, #0ea5e9, #3b82f6, #0ea5e9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        body { 
+            color: var(--text-main); 
+            background-color: var(--bg-base); 
+            line-height: 1.7; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        /* Subtle Animated Background for Depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.04) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.03) 0%, transparent 30%);
+            z-index: -1;
+            animation: bgFloat 20s infinite linear;
+        }
+
+        /* =========================================
+           Advanced Animations
+           ========================================= */
+        @keyframes bgFloat { 0% { transform: rotate(0deg) translate(0, 0); } 50% { transform: rotate(180deg) translate(15px, 15px); } 100% { transform: rotate(360deg) translate(0, 0); } }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes borderSpin { 100% { transform: rotate(360deg); } }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes pulseGlow { 0% { text-shadow: 0 0 5px var(--accent-glow); } 50% { text-shadow: 0 0 20px var(--accent-glow); } 100% { text-shadow: 0 0 5px var(--accent-glow); } }
+
+        /* Desktop Scroll Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+
+        /* =========================================
+           2-Color Flowing Border Box (Premium Effect)
+           ========================================= */
+        .flow-box {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            padding: 2px; /* Ultra-thin sleek border */
+            background: transparent;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s;
+        }
+        .flow-box::before {
+            content: '';
+            position: absolute;
+            top: -100%; left: -100%; width: 300%; height: 300%;
+            /* Strictly two colors: Transparent tail fading into the accent blue */
+            background: conic-gradient(transparent 75%, var(--accent) 100%);
+            animation: borderSpin 3.5s linear infinite;
+            opacity: 1; 
+        }
+        .flow-box:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 25px 50px rgba(14, 165, 233, 0.15); }
+        .flow-box:hover::before { animation-duration: 1.5s; /* Speeds up on hover */ }
+        
+        .flow-inner {
+            position: relative;
+            background: var(--bg-white);
+            border-radius: 18px;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Glassmorphism Utility */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+
+        /* =========================================
+           Navigation
+           ========================================= */
+        nav {
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky;
+            top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.03);
+        }
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary); letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--accent); animation: pulseGlow 3s infinite; font-size: 1.6rem; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; position: relative; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--accent); transition: width 0.3s ease-out; }
+        .nav-links a:hover::after { width: 100%; }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; }
+
+        /* =========================================
+           Hero Section
+           ========================================= */
+        .hero {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 0.98) 100%), 
+                        url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: white; padding: 14rem 5% 15rem 5%; text-align: center; position: relative;
+        }
+        .hero::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; background: linear-gradient(to top, var(--bg-base), transparent); }
+        .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); margin-bottom: 1.5rem; line-height: 1.1; font-weight: 900; background: linear-gradient(to right, #ffffff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.2rem; color: #cbd5e1; max-width: 800px; margin: 0 auto; line-height: 1.8; font-weight: 300; }
+
+        .image-banner { width: 100%; padding: 8rem 5%; background-size: cover; background-position: center; background-attachment: fixed; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+        .banner-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2,6,23,0.92), rgba(15,23,42,0.85)); z-index: 1; backdrop-filter: blur(5px); }
+        .banner-content { position: relative; z-index: 2; max-width: 900px; }
+
+        /* =========================================
+           Stats Grid
+           ========================================= */
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; padding: 0 5%; margin-top: -6rem; position: relative; z-index: 10; }
+        .stat-card { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .stat-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.2rem; filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3)); }
+        .stat-value { font-size: 3.5rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem; line-height: 1; }
+        .stat-card h3 { color: var(--text-main); margin-bottom: 0.8rem; font-size: 1.2rem; font-weight: 800; }
+        .stat-card p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+
+        /* =========================================
+           General Sections & Split Layouts
+           ========================================= */
+        section { padding: 7rem 5%; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--primary); margin-bottom: 1.2rem; font-weight: 900; letter-spacing: -1px; }
+        .section-header p { font-size: 1.15rem; color: var(--text-main); max-width: 800px; margin: 0 auto; line-height: 1.8; }
+
+        .split-section { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .split-image-container { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.1); transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .split-image-container:hover { transform: scale(1.02) rotateY(-3deg); perspective: 1000px; }
+        .split-image { width: 100%; display: block; object-fit: cover; }
+        .split-content h2 { font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; line-height: 1.2; font-weight: 900; letter-spacing: -1px; }
+        .split-content p { font-size: 1.15rem; color: var(--text-main); margin-bottom: 1.5rem; line-height: 1.8; }
+
+        /* =========================================
+           Timeline Grid (How to Engage)
+           ========================================= */
+        .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+        .timeline-card { padding: 3rem 2rem; border-radius: 20px; position: relative; overflow: hidden; }
+        .step-number { position: absolute; top: -15px; right: -10px; font-size: 8rem; font-weight: 900; color: rgba(14, 165, 233, 0.04); line-height: 1; transition: color 0.5s; z-index: 0; }
+        .flow-box:hover .step-number { color: rgba(14, 165, 233, 0.1); }
+        .timeline-tag { display: inline-block; background: var(--primary); color: white; font-size: 0.75rem; font-weight: 800; padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.2rem; letter-spacing: 1px; text-transform: uppercase; position: relative; z-index: 1; }
+        .timeline-card h3 { font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem; position: relative; z-index: 2; font-weight: 800; }
+        .timeline-card p { font-size: 1.05rem; color: var(--text-main); position: relative; z-index: 2; line-height: 1.7; }
+
+        /* =========================================
+           Tabs & The Delivery Pod
+           ========================================= */
+        .tab-container { max-width: 1100px; margin: 0 auto; border-radius: 20px; overflow: hidden; }
+        .tab-buttons { display: flex; border-bottom: 1px solid rgba(255,255,255,0.4); flex-wrap: wrap; background: rgba(255,255,255,0.3); }
+        .tab-btn { flex: 1; min-width: 200px; padding: 1.8rem 1rem; border: none; background: transparent; font-size: 1.1rem; font-weight: 800; color: var(--text-main); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .tab-btn:hover { background: rgba(255,255,255,0.8); color: var(--accent); }
+        .tab-btn.active { background: var(--bg-white); color: var(--primary); border-bottom: 3px solid var(--accent); }
+        .tab-content { display: none; padding: 4rem 3.5rem; animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; background: rgba(255,255,255,0.8); }
+        .tab-content.active { display: block; }
+        
+        .feature-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        .feature-list li { background: white; padding: 2.5rem 2rem; border-radius: 16px; border-left: 4px solid var(--accent); transition: all 0.4s; box-shadow: 0 8px 20px rgba(0,0,0,0.02); }
+        .feature-list li:hover { transform: translateX(8px) translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.06); }
+        .feature-list li strong { font-size: 1.3rem; color: var(--primary); display: block; margin-bottom: 0.8rem; font-weight: 800; }
+        .feature-list li p { font-size: 1rem; line-height: 1.6; }
+
+        /* =========================================
+           Tech Stats & Small Grids
+           ========================================= */
+        .tech-stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
+        .ts-card { background: white; border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center; transition: all 0.4s; box-shadow: 0 8px 25px rgba(0,0,0,0.02); border: 1px solid var(--border); }
+        .ts-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(14,165,233,0.1); }
+        .ts-val { font-size: 3rem; font-weight: 900; background: var(--gradient-flow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200%; animation: gradientMove 4s linear infinite; margin-bottom: 0.5rem; line-height: 1; }
+        .ts-title { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem; }
+        .ts-desc { font-size: 0.9rem; color: var(--text-main); }
+
+        .sub-tab-buttons { display: flex; gap: 1rem; margin-bottom: 3.5rem; flex-wrap: wrap; justify-content: center; }
+        .sub-tab-btn { padding: 1rem 2.5rem; border: none; border-radius: 50px; background: white; color: var(--text-main); font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .sub-tab-btn:hover { color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 25px rgba(14, 165, 233, 0.1); }
+        .sub-tab-btn.active { background: var(--primary); color: white; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2); }
+        
+        .tech-group-title { width: 100%; text-align: center; font-size: 1.6rem; color: var(--primary); margin: 2rem 0 1.5rem 0; font-weight: 900; }
+        
+        .tech-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+        .tech-item { width: 190px; background: white; padding: 2.5rem 1rem; border-radius: 16px; text-align: center; font-weight: 700; font-size: 1.05rem; border: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; align-items: center; gap: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .tech-item i { font-size: 2.4rem; color: var(--primary); transition: all 0.4s; }
+        .tech-item:hover { transform: translateY(-10px) scale(1.03); border-color: var(--accent); box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15); z-index: 2; }
+        .tech-item:hover i { color: var(--accent); transform: scale(1.1); }
+
+        /* =========================================
+           Contact Form
+           ========================================= */
+        .contact-container { max-width: 650px; margin: 0 auto; background: white; padding: 4rem 3.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+        .contact-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--gradient-flow); background-size: 200% 200%; animation: gradientMove 3s ease infinite; }
+        .form-group { margin-bottom: 2rem; }
+        .form-group label { display: block; margin-bottom: 0.8rem; font-weight: 800; color: var(--primary); font-size: 1.05rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 1.2rem; border: 2px solid var(--border); border-radius: 10px; font-size: 1rem; transition: all 0.3s; background: var(--bg-base); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); background: white; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+        .submit-btn { width: 100%; padding: 1.2rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: all 0.4s; text-transform: uppercase; letter-spacing: 1px; }
+        .submit-btn:hover { background: var(--accent); box-shadow: 0 15px 30px var(--accent-glow); transform: translateY(-2px); }
+
+        /* =========================================
+           Footer
+           ========================================= */
+        .site-footer { width: 100%; background: var(--primary); color: white; position: relative; }
+        .footer-top { padding: 6rem 5% 4rem 5%; }
+        .footer-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5rem; flex-wrap: wrap; gap: 3rem; }
+        .footer-heading { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin: 0; color: white; }
+        
+        .newsletter-box { background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); max-width: 450px; backdrop-filter: blur(10px); }
+        .newsletter-box h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: white; font-weight: 800; }
+        .newsletter-box p { color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+        .nl-form { display: flex; gap: 10px; }
+        .nl-form input { flex: 1; padding: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.2); color: white; outline: none; font-size: 1rem; }
+        .nl-form button { background: var(--accent); color: white; border: none; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .nl-form button:hover { background: white; color: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 15px var(--accent-glow); }
+
+        .footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3rem; margin-bottom: 5rem; }
+        .footer-col { display: flex; flex-direction: column; gap: 1.2rem; }
+        .footer-col h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; color: white; text-transform: uppercase; letter-spacing: 1.5px; }
+        .footer-col a { color: var(--text-light); text-decoration: none; font-size: 1rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500; }
+        .footer-col a:hover { color: var(--accent); transform: translateX(6px); }
+        
+        .footer-social-row { display: flex; gap: 2rem; padding-top: 3rem; border-top: 1px solid rgba(255, 255, 255, 0.1); justify-content: center; }
+        .footer-social-row a { color: white; font-size: 1.8rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; background: rgba(255,255,255,0.05); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); }
+        .footer-social-row a:hover { color: white; background: var(--accent); border-color: var(--accent); transform: translateY(-10px) rotate(10deg); box-shadow: 0 10px 20px var(--accent-glow); }
+        
+        .footer-bottom { background: #020617; padding: 3rem 5%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .legal-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2.5rem; margin-bottom: 1.5rem; }
+        .legal-links a { color: var(--text-light); text-decoration: none; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: color 0.3s; }
+        .legal-links a:hover { color: white; }
+        .footer-brand-text { font-weight: 800; font-size: 1.2rem; color: white; margin-bottom: 0.8rem; letter-spacing: 0.5px; }
+
+        /* =========================================
+           Rich Visual Glass Modals
+           ========================================= */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 3000; display: none; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.4s ease; }
+        .modal-overlay.show { opacity: 1; }
+        .modal-content { background: rgba(255,255,255,0.98); width: 100%; max-width: 1050px; max-height: 85vh; border-radius: 24px; padding: 4rem; overflow-y: auto; position: relative; animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 40px 100px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); }
+        .modal-content::-webkit-scrollbar { width: 8px; }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+        .close-modal { position: absolute; top: 25px; right: 25px; font-size: 1.6rem; cursor: pointer; color: var(--primary); background: var(--bg-base); width: 45px; height: 45px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 10; }
+        .close-modal:hover { color: white; background: var(--accent); transform: rotate(90deg); box-shadow: 0 8px 20px var(--accent-glow); }
+        .modal-header-title { font-size: 2.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1.5rem; display: inline-block; line-height: 1.1; letter-spacing: -1px; }
+
+        .tech-detail-body p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; color: var(--text-main); }
+        
+        /* Modal Internal Grids */
+        .modal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 2.5rem; }
+        .modal-card { background: white; padding: 2.5rem; border-radius: 16px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.03); transition: all 0.4s; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; }
+        .modal-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(14, 165, 233, 0.12); }
+        .modal-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem; transition: transform 0.4s; }
+        .modal-card:hover i { transform: scale(1.1); color: var(--primary); }
+        .modal-card h3 { font-size: 1.5rem; font-weight: 900; margin-bottom: 0.8rem; color: var(--primary); }
+        .modal-card p, .modal-card a { color: var(--text-main); text-decoration: none; font-size: 1.05rem; line-height: 1.6; }
+        .modal-card a { font-weight: 800; font-size: 1.2rem; color: var(--primary); margin-top: 1rem; }
+        .modal-card a:hover { color: var(--accent); text-decoration: underline; }
+
+        .img-card { padding: 0; overflow: hidden; align-items: stretch; text-align: left; }
+        .img-card .img-container { height: 220px; overflow: hidden; position: relative; }
+        .img-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .img-card:hover img { transform: scale(1.1); }
+        .img-card .body { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .img-card .metric { display: inline-block; background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.85rem; align-self: flex-start; letter-spacing: 1px; margin-top: auto; }
+
+        /* Floating Socials */
+        .floating-socials { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 12px; z-index: 2500; }
+        .social-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
+        .social-btn:hover { transform: translateY(-8px) scale(1.1); color: white; border-color: transparent; }
+        .social-btn.whatsapp:hover { background: #25D366; box-shadow: 0 12px 25px rgba(37, 211, 102, 0.3); }
+        .social-btn.linkedin:hover { background: #0077b5; box-shadow: 0 12px 25px rgba(0, 119, 181, 0.3); }
+
+        /* =========================================
+           MOBILE SPECIFIC OPTIMIZATIONS
+           ========================================= */
+        @media (max-width: 1024px) {
+            .footer-grid { grid-template-columns: repeat(3, 1fr); }
+            .split-section { grid-template-columns: 1fr; text-align: center; }
+            .modal-content { padding: 3rem 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile Bouncy Scroll Reveal */
+            .reveal { transform: translateY(60px) scale(0.92); transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+            .reveal.active { transform: translateY(0) scale(1); }
+
+            /* Subtle mobile ambient background shift */
+            body { animation: mobileBgShift 15s ease-in-out infinite alternate; }
+            @keyframes mobileBgShift { 0% { background-color: var(--bg-base); } 100% { background-color: #e2e8f0; } }
+
+            /* Custom Touch Vibration / Pop Effect */
+            @keyframes mobileVibrate {
+                0% { transform: translate(0) scale(0.98); }
+                25% { transform: translate(-2px, 1px) scale(0.98); }
+                50% { transform: translate(2px, -1px) scale(0.98); }
+                75% { transform: translate(-1px, 2px) scale(0.98); }
+                100% { transform: translate(0) scale(1); }
+            }
+            .tech-item:active, .stat-card:active, .timeline-card:active, .modal-card:active, .sub-tab-btn:active {
+                animation: mobileVibrate 0.2s linear;
+                background: rgba(14, 165, 233, 0.05);
+            }
+
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255,255,255,0.98); padding: 1.5rem 5%; box-shadow: 0 15px 25px rgba(0,0,0,0.1); }
+            .nav-links.active { display: flex; gap: 1.2rem; }
+            .mobile-menu-btn { display: block; }
+            
+            .hero { padding: 9rem 5% 10rem 5%; }
+            .hero h1 { font-size: 2.6rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-top-row { flex-direction: column; align-items: center; text-align: center; }
+            .newsletter-box { max-width: 100%; width: 100%; }
+            .floating-socials { bottom: 20px; right: 20px; }
+            .modal-grid { grid-template-columns: 1fr; }
+            .contact-container { padding: 3rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="glass">
+        <div class="logo"><i class="fa-solid fa-layer-group"></i> CAELION</div>
+        <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#philosophy" onclick="toggleMenu()">Philosophy</a></li>
+            <li><a href="#engagement" onclick="toggleMenu()">Engagement</a></li>
+            <li><a href="#standards" onclick="toggleMenu()">Standards</a></li>
+            <li><a href="#stack" onclick="toggleMenu()">Tech Stack</a></li>
+            <li><a href="#contact" onclick="toggleMenu()">Contact HR</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <h1 class="reveal">AI-Native Custom Software Engineering</h1>
+        <p class="reveal reveal-delay-1">We architect, build, and operate custom software systems, AI-native platforms, and intelligent automation for enterprises that can't afford to wait. No staffing. No lock-in. Working software every 2 weeks.</p>
+    </section>
+
+    <div class="stats reveal reveal-delay-2">
+        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-rocket stat-icon"></i><div class="stat-value"><span>3.4x</span></div><h3>Faster Delivery</h3><p>AI-augmented SDLC vs. traditional engineering teams</p></div></div>
+        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-stopwatch stat-icon"></i><div class="stat-value"><span>60-80%</span></div><h3>Cycle Time Reduction</h3><p>Measured across IT ops, customer service, and data automation</p></div></div>
+        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-triangle-exclamation stat-icon"></i><div class="stat-value"><span>87%</span></div><h3>Enterprises Not AI-Ready</h3><p>Lack production ML pipelines. Caelion closes that gap fast.</p></div></div>
+        <div class="flow-box"><div class="flow-inner stat-card"><i class="fa-solid fa-user-shield stat-icon"></i><div class="stat-value"><span>100%</span></div><h3>Senior Engineers</h3><p>Every pod member has 6+ years of production experience</p></div></div>
+    </div>
+
+    <section id="philosophy" class="split-section">
+        <div class="split-content reveal">
+            <h2>Our AI-Native Design Philosophy</h2>
+            <p>At CAELION, our approach to software engineering is rooted in a deliberate and advanced design philosophy, ensuring that every solution we craft is not merely functional but also intelligent, scalable, and future-proof.</p>
+            <p>We eliminate corporate bloat and middle management layers, replacing them with high-velocity, autonomous engineering pods. By doing so, we deliver robust digital architectures and full repository ownership straight into the hands of your technical leads.</p>
+            <blockquote>"Every technology choice is deliberate—optimized for performance, maintainability, and long-term viability. No hype. No lock-in."</blockquote>
+        </div>
+        <div class="split-image-container reveal reveal-delay-1">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1000&auto=format&fit=crop" alt="Modern AI Workspace" class="split-image">
+        </div>
+    </section>
+
+    <section id="how-to-engage" class="glass" style="margin: 4rem 5%; border-radius: 30px;">
+        <div class="section-header reveal">
+            <h2>How To Engage</h2>
+            <p>We provide structured, high-velocity engineering paths. Choose the model that accelerates your immediate enterprise roadmap.</p>
+        </div>
+        <div class="timeline-grid reveal reveal-delay-1">
+            <div class="flow-box"><div class="flow-inner timeline-card">
+                <span class="step-number">1</span><span class="timeline-tag">Start Here</span>
+                <h3>Rapid Assessment</h3><p>2-4 week fixed-fee sprint. We provide an architecture audit, risk register, AI-readiness scorecard, and a prioritized modernization roadmap.</p>
+            </div></div>
+            <div class="flow-box"><div class="flow-inner timeline-card">
+                <span class="step-number">2</span><span class="timeline-tag">Most Common</span>
+                <h3>Project Engagement</h3><p>Fixed-scope delivery. We guarantee working software every sprint. Includes full runbooks, architecture docs, and knowledge transfer at close.</p>
+            </div></div>
+            <div class="flow-box"><div class="flow-inner timeline-card">
+                <span class="step-number">3</span><span class="timeline-tag">Highest Impact</span>
+                <h3>Capability Pod</h3><p>Embedded monthly retainer utilizing 3-8+ senior engineers. Velocity is strictly tracked via DORA metrics. Scales directly with your roadmap.</p>
+            </div></div>
+            <div class="flow-box"><div class="flow-inner timeline-card">
+                <span class="step-number">4</span><span class="timeline-tag">Long-Term</span>
+                <h3>Advisory Retainer</h3><p>Fractional CTO deployment. Includes monthly architecture reviews, technology strategy, and maintaining a running Architecture Decision Log.</p>
+            </div></div>
+        </div>
+    </section>
+
+    <section id="engagement">
+        <div class="section-header reveal">
+            <h2>The Delivery Pod Architecture</h2>
+            <p>Every engagement runs on a cross-functional Delivery Pod—self-contained, autonomous, shipping every 2 weeks. Senior engineers only. No juniors. No bait-and-switch.</p>
+        </div>
+
+        <div class="tab-container glass reveal reveal-delay-1">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab(event, 'build', 'main-tab')"><i class="fa-solid fa-code"></i> What We Build</button>
+                <button class="tab-btn" onclick="openTab(event, 'pod', 'main-tab')"><i class="fa-solid fa-users-gear"></i> Pod Structure</button>
+            </div>
+
+            <div id="build" class="tab-content main-tab active">
+                <ul class="feature-list">
+                    <li>
+                        <strong>Custom Software Products</strong>
+                        <p>Web apps, mobile apps, SaaS platforms, and internal tools—engineered end-to-end with full CI/CD, observability, and production hardening.</p>
+                    </li>
+                    <li>
+                        <strong>AI-Native Platforms</strong>
+                        <p>LLM integrations, RAG pipelines, agent workflows, and model-serving infrastructure. AI embedded in every layer, not bolted on.</p>
+                    </li>
+                    <li>
+                        <strong>Legacy Modernization</strong>
+                        <p>Strangler-fig decomposition of monoliths into cloud-native microservices. No big-bang rewrites. No business disruption.</p>
+                    </li>
+                    <li>
+                        <strong>Intelligent Automation</strong>
+                        <p>Context-aware workflow automation, integration orchestration, and AI decision support—cutting manual cycle times by 60-80%.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="pod" class="tab-content main-tab">
+                <ul class="feature-list">
+                    <li><strong>Pod Lead / Architect</strong><br>Owns technical direction, architecture decisions, and client outcomes. Staff or Principal Engineer level.</li>
+                    <li><strong>Full-Stack Engineers (2-4)</strong><br>Senior engineers across frontend, backend, and API layers. All write tests and own their code in production.</li>
+                    <li><strong>AI/ML Engineer</strong><br>LLM Integrations, agent workflows, RAG pipelines, and feature engineering. Bridges data science and production.</li>
+                    <li><strong>Platform/DevOps & QA</strong><br>IaC, Kubernetes, CI/CD, and observability. Production-hardened, cost-optimized, operationally sound. Shift-left QA culture.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="image-banner reveal">
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+            <h2 style="font-size: 4rem; margin-bottom: 1rem; font-weight: 900;">Engineered to Last.</h2>
+            <p style="font-size: 1.4rem; max-width: 900px; margin: 0 auto; line-height: 1.8;">Optimized for extreme performance, long-term maintainability, and total cloud-agnostic viability. No hype. No lock-in.</p>
+        </div>
+    </div>
+
+    <section id="standards">
+        <div class="section-header reveal">
+            <h2>Engineering Standards</h2>
+            <p>Our pods operate under immutable delivery laws. We don't negotiate on code quality.</p>
+        </div>
+        <div class="tab-container glass reveal reveal-delay-1" style="background: transparent; border: none; box-shadow: none;">
+            <ul class="feature-list">
+                <li class="glass"><i class="fa-solid fa-code-commit" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>1. Code Quality (ENFORCED)</strong> ESLint / SonarQube gates. Cyclomatic complexity limits. PR reviews on every merge.</li>
+                <li class="glass"><i class="fa-solid fa-vial-circle-check" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>2. Test Coverage (80% MIN)</strong> Unit, Integration, E2E, and contract tests required. Automated in CI on every commit.</li>
+                <li class="glass"><i class="fa-solid fa-shield-virus" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>3. Security Scanning (EVERY BUILD)</strong> SAST/DAST, Snyk CVE scanning, OWASP Top 10, secrets scanning on every push.</li>
+                <li class="glass"><i class="fa-solid fa-satellite-dish" style="font-size: 2.2rem; color: var(--accent); margin-bottom: 1rem;"></i><br><strong>4. Observability (DAY ONE)</strong> Structured logging, distributed tracing, dashboards, and runbooks before go-live.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="stack">
+        <div class="section-header reveal">
+            <h2>Our Full-Stack Technology Depth</h2>
+            <p>Caelion engineers are opinionated about tooling—we choose battle-tested, cloud-native technologies with strong community support and long-term viability. Click any technology to explore our architectural integration methodologies.</p>
+        </div>
+
+        <h3 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary); font-size: 2.2rem; font-weight: 900;">WHAT WE SHIP WITH</h3>
+        <div class="tech-stats-container reveal reveal-delay-1">
+            <div class="ts-card"><div class="ts-val">6</div><div class="ts-title">Technology Categories</div><div class="ts-desc">Frontend, backend, data, AI/ML, cloud, and observability—full-spectrum coverage.</div></div>
+            <div class="ts-card"><div class="ts-val">9+</div><div class="ts-title">Tools Per Category</div><div class="ts-desc">Deep expertise across every layer of the modern enterprise stack.</div></div>
+            <div class="ts-card"><div class="ts-val">100%</div><div class="ts-title">Open Standards</div><div class="ts-desc">No proprietary lock-in. Full source code and docs handed over at close.</div></div>
+            <div class="ts-card"><div class="ts-val">3</div><div class="ts-title">Cloud Platforms</div><div class="ts-desc">AWS, Azure, and GCP—cloud-agnostic by design, no vendor lock-in.</div></div>
+        </div>
+
+        <div class="tab-container reveal reveal-delay-2" style="border: none; box-shadow: none; background: transparent;">
+            <div class="tab-content active" style="display: block; padding: 0; background: transparent;">
+                
+                <div class="sub-tab-buttons">
+                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'frontend')">Frontend</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'backend')">Backend & APIs</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'ai')">AI & ML</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'data')">Data & Storage</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'cloud')">Cloud & DevOps</button>
+                </div>
+
+                <div id="frontend" class="tech-grid sub-tab-content">
+                    <div class="tech-item glass" onclick="openDataModal('react')"><i class="fa-brands fa-react"></i> React / Next.js</div>
+                    <div class="tech-item glass" onclick="openDataModal('vue')"><i class="fa-brands fa-vuejs"></i> Vue</div>
+                    <div class="tech-item glass" onclick="openDataModal('ts')"><i class="fa-brands fa-js"></i> TypeScript</div>
+                    <div class="tech-item glass" onclick="openDataModal('flutter')"><i class="fa-solid fa-mobile-screen"></i> Flutter / React Native</div>
+                    <div class="tech-item glass" onclick="openDataModal('tailwind')"><i class="fa-solid fa-wind"></i> Tailwind / Vite</div>
+                </div>
+
+                <div id="backend" class="tech-grid sub-tab-content" style="display: none;">
+                    <div class="tech-item glass" onclick="openDataModal('node')"><i class="fa-brands fa-node-js"></i> Node.js</div>
+                    <div class="tech-item glass" onclick="openDataModal('dotnet')"><i class="fa-brands fa-microsoft"></i> .NET 8</div>
+                    <div class="tech-item glass" onclick="openDataModal('go')"><i class="fa-brands fa-golang"></i> Go</div>
+                    <div class="tech-item glass" onclick="openDataModal('python')"><i class="fa-brands fa-python"></i> Python / FastAPI</div>
+                    <div class="tech-item glass" onclick="openDataModal('graphql')"><i class="fa-solid fa-diagram-project"></i> Spring Boot / GraphQL</div>
+                </div>
+
+                <div id="ai" class="tech-grid sub-tab-content" style="display: none;">
+                    <div class="tech-item glass" onclick="openDataModal('openai')"><i class="fa-solid fa-brain"></i> OpenAI / Claude</div>
+                    <div class="tech-item glass" onclick="openDataModal('langchain')"><i class="fa-solid fa-link"></i> LangChain / LangGraph</div>
+                    <div class="tech-item glass" onclick="openDataModal('pinecone')"><i class="fa-solid fa-database"></i> Pinecone / Weaviate</div>
+                    <div class="tech-item glass" onclick="openDataModal('huggingface')"><i class="fa-solid fa-face-smile"></i> vLLM / Hugging Face</div>
+                </div>
+
+                <div id="data" class="tech-grid sub-tab-content" style="display: none;">
+                    <div class="tech-item glass" onclick="openDataModal('postgres')"><i class="fa-solid fa-database"></i> PostgreSQL</div>
+                    <div class="tech-item glass" onclick="openDataModal('mongo')"><i class="fa-solid fa-envira"></i> MongoDB</div>
+                    <div class="tech-item glass" onclick="openDataModal('redis')"><i class="fa-solid fa-memory"></i> Redis</div>
+                    <div class="tech-item glass" onclick="openDataModal('snowflake')"><i class="fa-solid fa-snowflake"></i> Snowflake / BigQuery</div>
+                </div>
+
+                <div id="cloud" class="tech-grid sub-tab-content" style="display: none; flex-direction: column; align-items: center;">
+                    <h4 class="tech-group-title">Cloud Platforms</h4>
+                    <div class="tech-grid"><div class="tech-item glass" onclick="openDataModal('aws')"><i class="fa-brands fa-aws"></i> AWS / Azure / GCP</div></div>
+                    
+                    <h4 class="tech-group-title">CI/CD & GitOps</h4>
+                    <div class="tech-grid">
+                        <div class="tech-item glass" onclick="openDataModal('k8s')"><i class="fa-solid fa-dharmachakra"></i> Kubernetes / Istio</div>
+                        <div class="tech-item glass" onclick="openDataModal('terraform')"><i class="fa-solid fa-code-merge"></i> Terraform</div>
+                        <div class="tech-item glass" onclick="openDataModal('github')"><i class="fa-brands fa-github"></i> ArgoCD / GitHub Actions</div>
+                    </div>
+
+                    <h4 class="tech-group-title">Observability & Security</h4>
+                    <div class="tech-grid">
+                        <div class="tech-item glass" onclick="openDataModal('datadog')"><i class="fa-solid fa-dog"></i> Datadog / OpenTelemetry</div>
+                        <div class="tech-item glass" onclick="openDataModal('snyk')"><i class="fa-solid fa-shield-halved"></i> Snyk / Vault</div>
+                        <div class="tech-item glass" onclick="openDataModal('grafana')"><i class="fa-solid fa-chart-pie"></i> Grafana / Prometheus</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="padding-top: 2rem;">
+        <div class="section-header reveal">
+            <h2>Ready to Accelerate?</h2>
+            <p>Connect with our engineering leadership to discuss your roadmap.</p>
+        </div>
+        <div class="contact-container reveal reveal-delay-1">
+            <form onsubmit="event.preventDefault(); alert('Assessment Request Safely Transmitted via 256-bit AES Encryption Protocol.');">
+                <div class="form-group"><label>Full Name</label><input type="text" placeholder="e.g. Jane Doe" required></div>
+                <div class="form-group"><label>Email</label><input type="email" placeholder="e.g. director@enterprise.com" required></div>
+                <div class="form-group"><label>About Project</label><textarea rows="5" placeholder="Detail your microservices refactoring goals, AI pipeline needs, or mobile app specifications..." required></textarea></div>
+                <button type="submit" class="submit-btn">Request Send</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-top-row reveal">
+                <h2 class="footer-heading">Let's build the future.</h2>
+                <div class="newsletter-box glass">
+                    <h3>Engineering Insights Newsletter</h3>
+                    <p>Join tech leaders receiving weekly system architecture blueprints and LLM implementation guides directly from our principal engineers.</p>
+                    <div class="nl-form">
+                        <input type="email" placeholder="Enter the  email..." required>
+                        <button type="button" onclick="alert('Subscribed successfully to CAELION engineering updates.')">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-grid reveal reveal-delay-1">
+                <div class="footer-col large-links">
+                    <a onclick="openModal('about-caelion-modal')" target="_blank">About CAELION</a>
+                    <a onclick="openModal('contact-details-modal')" target="_blank">Contact us</a>
+                    <a onclick="openModal('contact-details-modal')" target="_blank">Submit RFP</a>
+                    <a href="https://maps.google.com" target="_blank">View locations <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 1.1rem;"></i></a>
+                </div>
+                <div class="footer-col">
+                    <h3>What we do</h3>
+                    <a onclick="openModal('services-overview-modal')" target="_blank">Services</a>
+                    <a onclick="openModal('case-studies-modal')" target="_blank">Case studies</a>
+                    <a onclick="openModal('industries-modal')" target="_blank">Industries</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Core Capabilities</h3>
+                    <a onclick="openDataModal('react')" target="_blank">Frontend Systems</a>
+                    <a onclick="openDataModal('node')" target="_blank">Backend & API Logic</a>
+                    <a onclick="openDataModal('openai')" target="_blank">AI/ML Integration</a>
+                    <a onclick="openDataModal('postgres')" target="_blank">Data Engineering</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Insights</h3>
+                    <a onclick="openDataModal('social_linkedin')" target="_blank">Newsroom Updates</a>
+                    <a onclick="openDataModal('social_github')" target="_blank">Open Source Hub</a>
+                    <a onclick="openDataModal('social_youtube')" target="_blank">Tech Dbriefs</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Careers</h3>
+                    <a onclick="openModal('careers-modal')" target="_blank">Careers home</a>
+                    <a onclick="openModal('careers-modal')" target="_blank">Job Search <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i></a>
+                    <a onclick="openDataModal('social_linkedin')" target="_blank">Alumni Network</a>
+                </div>
+            </div>
+            
+            <div class="footer-social-row reveal reveal-delay-2">
+                <a onclick="openDataModal('social_linkedin')" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a onclick="openDataModal('social_twitter')" target="_blank" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                <a onclick="openDataModal('social_instagram')" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a onclick="openDataModal('social_youtube')" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a onclick="openDataModal('social_github')" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="legal-links">
+                <a onclick="openModal('terms-modal')" target="_blank">Terms of Use</a>
+                <a onclick="openModal('privacy-modal')" target="_blank">Privacy</a>
+                <a onclick="openDataModal('legal_privacy')" target="_blank">Data Privacy Framework</a>
+                <a onclick="openDataModal('legal_cookie')" target="_blank">Cookie Notice <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a>
+            </div>
+            
+            <div class="footer-brand-text">CAELION — caelion.in | info@caelion.in</div>
+            
+            <p class="copyright">© 2026. CAELION Custom Software Engineering - caelion.in | All architectural blueprints strictly regulated.</p>
+        </div>
+    </footer>
+
+    <div class="floating-socials">
+        <a href="https://wa.me/917989004552" target="_blank" class="social-btn whatsapp glass" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://linkedin.com" target="_blank" class="social-btn linkedin glass" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    </div>
+
+    <div id="dynamic-data-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'dynamic-data-modal')">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal('dynamic-data-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <i id="dd-modal-icon" class="fa-brands fa-react" style="font-size: 4rem; color: var(--accent); margin-bottom: 1.5rem; display: block; text-align: center;"></i>
+            <h2 id="dd-modal-title" class="modal-header-title" style="display: block; text-align: center;">Technology</h2>
+            <div id="dd-modal-body" class="tech-detail-body" style="margin-top: 2.5rem;"></div>
+        </div>
+    </div>
+
+    <div id="contact-details-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'contact-details-modal')">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal('contact-details-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">Connect With Leadership</h2>
+            <p style="font-size: 1.25rem; color: var(--text-main); margin-bottom: 2rem; line-height: 1.8;">Interface directly with our senior delivery architects to plan modernizations, establish enterprise infrastructure retainers, or submit formal RFPs. We eliminate the sales loop.</p>
+            <div class="modal-grid">
+                <div class="modal-card">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h3>Email Operations</h3>
+                    <p style="margin-bottom: 15px;">Architecture Reviews & RFPs</p>
+                    <a href="mailto:info@caelion.in">info@caelion.in</a>
+                </div>
+                <div class="modal-card">
+                    <i class="fa-solid fa-phone"></i>
+                    <h3>Direct Line</h3>
+                    <p style="margin-bottom: 15px;">Mon - Fri (9 AM - 6 PM IST)</p>
+                    <a href="tel:+917989004552">+91 79890 04552</a>
+                </div>
+                <div class="modal-card" style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center;">
+                    <i class="fa-solid fa-building-flag"></i>
+                    <h3>HQ Coordinates</h3>
+                    <p style="margin-bottom: 25px; font-size: 1.2rem;">Cyberabad Tech Zone, Phase II, Hyderabad, Telangana, India</p>
+                    <a href="https://maps.google.com" target="_blank" style="color: white; background: var(--primary); padding: 1.2rem 3rem; border-radius: 15px; font-weight: 900; font-size: 1.2rem; display: inline-block; transition: all 0.3s; text-transform: uppercase;">Open Maps Node <i class="fa-solid fa-map-location-dot" style="margin-left: 10px;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="case-studies-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'case-studies-modal')">
+        <div class="modal-content glass" style="max-width: 1300px;">
+            <button class="close-modal" onclick="closeModal('case-studies-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">Production Architectural Case Studies</h2>
+            <div class="modal-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                <div class="modal-card img-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?q=80&w=800&auto=format&fit=crop" alt="Inventory ERP Grid"></div>
+                    <div class="body">
+                        <h3>Automated Warehouse ERP</h3>
+                        <p>Implemented an automated warehouse inventory system utilizing continuous barcode scanning logic, real-time inward/outward state processing, and immediate database triggers. Eliminating manual ledger entries saved thousands of man-hours and prevented severe stock degradation.</p>
+                        <span class="metric">60-80% Cycle Time Drop</span>
+                    </div>
+                </div>
+                <div class="modal-card img-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Data Science Modeling"></div>
+                    <div class="body">
+                        <h3>Manufacturing ML Analytics</h3>
+                        <p>Built end-to-end deep learning pipelines using Python to analyze 5 years of dense production, pricing, and historical seasonal sales variables. The model successfully automated industrial forecasting parameters for a massive bolt manufacturing firm, tracking raw material fluctuations flawlessly.</p>
+                        <span class="metric">94% Prediction Accuracy</span>
+                    </div>
+                </div>
+                <div class="modal-card img-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=800&auto=format&fit=crop" alt="Clinic Management Platform"></div>
+                    <div class="body">
+                        <h3>Hospital Booking Platform</h3>
+                        <p>Engineered a custom appointment scheduling system incorporating secure multi-doctor validation pathways, server error logging configurations, and automated transactional email notification queues to handle massive regional patient loads safely across a multi-clinic network.</p>
+                        <span class="metric">Zero-Downtime Deploy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="industries-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'industries-modal')">
+        <div class="modal-content glass" style="max-width: 1300px;">
+            <button class="close-modal" onclick="closeModal('industries-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">Target Sectors We Transform</h2>
+            <div class="modal-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                <div class="modal-card img-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" alt="Manufacturing"></div>
+                    <div class="body">
+                        <h3 style="color: #8b5cf6;"><i class="fa-solid fa-industry" style="margin-right: 10px;"></i> Heavy Manufacturing</h3>
+                        <p>We build tool room asset management tracking, tool-life log processing frameworks, store room allocation engines, and comprehensive industrial production data systems using robust SQL tables.</p>
+                    </div>
+                </div>
+                <div class="modal-card img-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?q=80&w=800&auto=format&fit=crop" alt="Logistics"></div>
+                    <div class="body">
+                        <h3 style="color: #10b981;"><i class="fa-solid fa-truck-fast" style="margin-right: 10px;"></i> Logistics & Inventory</h3>
+                        <p>Deploying automated warehouse routing engines, mobile barcode scanner hardware triggers, inward inventory state checking systems, and highly scalable cloud backend synchronizations.</p>
+                    </div>
+                </div>
+                <div class="modal-card img-card">
+                    <div class="img-container"><img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=800&auto=format&fit=crop" alt="E-Commerce"></div>
+                    <div class="body">
+                        <h3 style="color: #0ea5e9;"><i class="fa-solid fa-cart-shopping" style="margin-right: 10px;"></i> Enterprise E-Commerce</h3>
+                        <p>High-volume transaction architectures built completely via scalable Node.js backend pipelines, decoupled MongoDB databases, and fluid native Flutter environments for global app stores.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="careers-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'careers-modal')">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal('careers-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">Join The Engineering Pods</h2>
+            <p style="font-size: 1.25rem; color: var(--text-main); margin-bottom: 2.5rem; line-height: 1.8;">We recruit exclusively senior engineers with 6+ years of production platform engineering practice. No corporate bloat. No middle management. Just elite builders shipping elite code.</p>
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div class="flow-box"><div class="flow-inner" style="padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                    <div>
+                        <h3 style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem;">Senior Full-Stack Developer</h3>
+                        <p style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 1.5rem;">Core Requirements: Node.js, MongoDB clustering, Next.js setups, and native cross-platform Flutter mobile builds.</p>
+                        <div class="tech-tags"><span>Remote Global</span><span>Full-Time Retainer</span><span>6+ Yrs Exp</span></div>
+                    </div>
+                    <a href="mailto:careers@caelion.in?subject=Application:%20Senior%20Full-Stack" class="submit-btn" style="width: auto; text-decoration: none;" target="_blank">Submit Resume</a>
+                </div></div>
+                <div class="flow-box"><div class="flow-inner" style="padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                    <div>
+                        <h3 style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem;">Principal AI / ML Infrastructure Engineer</h3>
+                        <p style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 1.5rem;">Core Requirements: Building deep learning production pipelines, advanced RAG implementations, vector DB routing logic.</p>
+                        <div class="tech-tags"><span>Hyderabad Hub</span><span>Full-Time</span><span>8+ Yrs Exp</span></div>
+                    </div>
+                    <a href="mailto:careers@caelion.in?subject=Application:%20AIML%20Architect" class="submit-btn" style="width: auto; text-decoration: none;" target="_blank">Submit Resume</a>
+                </div></div>
+                <div class="flow-box"><div class="flow-inner" style="padding: 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                    <div>
+                        <h3 style="font-size: 1.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem;">Interactive UI/UX Specialist</h3>
+                        <p style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 1.5rem;">Core Requirements: Three.js web animation designs, advanced spatial 3D components, modern glassmorphism layouts.</p>
+                        <div class="tech-tags"><span>Remote Only</span><span>Contract Retainer</span><span>5+ Yrs Exp</span></div>
+                    </div>
+                    <a href="mailto:careers@caelion.in?subject=Application:%20UIUX%20Specialist" class="submit-btn" style="width: auto; text-decoration: none;" target="_blank">Submit Resume</a>
+                </div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about-caelion-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'about-caelion-modal')">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal('about-caelion-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">About CAELION Group</h2>
+            <div class="tech-detail-body" style="margin-top: 1.5rem;">
+                <p>CAELION operates as an advanced AI-native custom software engineering group engineered to build high-end production-hardened platforms for complex enterprise operations. We dismantle antiquated IT outsourcing delivery models that rely heavily on bloated staffing, junior teams, and endless billable hours. Instead, we staff engagements exclusively with autonomous cross-functional engineering pods that deliver working software every two weeks without exception.</p>
+                <p>Our technical squads build architectural frameworks focused entirely on cloud-neutral infrastructures, providing enterprises complete leverage over their databases and analytical arrays without the risk of proprietary ecosystem lock-in. Every single member of our development pod maintains over six years of production platform execution experience, guaranteeing immediate alignment with heavy transactional environments.</p>
+                <p>We remain deeply dedicated to establishing high code clarity, enforcing rigid testing gate metrics, and shifting automated vulnerability scans directly into the continuous integration push cycle. At CAELION, your custom applications and business-critical pipelines are delivered fully hardened, properly optimized, and completely owned by your enterprise from day one. Reclaim your systemic operational edge.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="services-overview-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'services-overview-modal')">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal('services-overview-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">Our Services Overview</h2>
+            <div class="tech-detail-body" style="margin-top: 1.5rem;">
+                <p>We architect, deploy, and maintain custom web applications, cross-platform mobile systems, cloud-agnostic SaaS platforms, and internal industrial inventory portals. Our delivery pods drive software execution through full automated test coverages, continuous monitoring hooks, and versioned configuration blueprints. We circumvent fragile low-code patterns by writing clean, performant code utilizing open standards stack configurations.</p>
+                <p>Our primary operational tracks incorporate legacy platform strangler-fig decompositions, persistent vector indexing setups, and real-time integration workflows. We excel at migrating monolith databases into cloud-native microservices architectures smoothly, maintaining absolute transactional continuity throughout the processing lifecycle. We embed AI capabilities deep into application models rather than applying them as simple superficial layers.</p>
+                <p>Furthermore, CAELION provides comprehensive fractional technology strategy retainers to oversee structural roadmaps and architectural logs over extended intervals. We evaluate data systems using rigid DORA velocity parameters to match your company's long-term scale benchmarks perfectly. Entrust your platform modernization to senior engineering experts who build software to endure.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="privacy-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'privacy-modal')">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal('privacy-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">Privacy Policy</h2>
+            <div class="tech-detail-body" style="margin-top: 1.5rem;">
+                <p>At CAELION, we prioritize data privacy. This policy details how we handle information inputs and protect core storage layers across enterprise custom software systems safely.</p>
+                <p>We strictly utilize enterprise-grade encryption at rest and in transit. We never sell, trade, or distribute client system architectures or personal corporate data to external marketing vendors. Internal development pods operate under strict access control limits to maintain absolute intellectual property security.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'terms-modal')">
+        <div class="modal-content glass">
+            <button class="close-modal" onclick="closeModal('terms-modal')"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-header-title">Terms & Conditions</h2>
+            <div class="tech-detail-body" style="margin-top: 1.5rem;">
+                <p>By using the CAELION digital interface, you agree to these operational parameters. Specific technical tasks, milestone cycles, and code repository deliveries are managed via signed Master Service Agreements between CAELION and the enterprise client.</p>
+                <p>All intellectual property generated during active development sprints is fully transferred and assigned to the client upon the successful completion of the engagement parameters. We do not hostage code, frameworks, or databases.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // LONG DATA DICTIONARY 
+        const modalData = {
+            react: { title: "React / Next.js", icon: "fa-brands fa-react", desc: "<p>React and Next.js form the absolute core of our frontend architecture. We utilize these battle-tested frameworks to build highly dynamic, SEO-optimized web applications that scale effortlessly under heavy enterprise loads.</p><p>By leveraging advanced Next.js server-side rendering (SSR) and static site generation (SSG), we ensure that your platforms deliver sub-second initial load times. Our React architectures are strictly typed, utilizing deep component isolation to prevent cascade rendering failures.</p><p>We don't just build pages; we build cohesive design systems that maintain rigorous enterprise-level structural integrity and global accessibility compliance from the very first commit.</p>" },
+            vue: { title: "Vue.js Ecosystem", icon: "fa-brands fa-vuejs", desc: "<p>We deploy the Vue framework when projects require exceptional reactive speed and lightweight bundle sizes. Vue’s progressive architecture allows our engineers to incrementally modernize legacy applications without forcing a complete system rewrite.</p><p>Using the Composition API, we build complex state-management systems that remain highly readable and easy to test. This ensures long-term code maintainability for your internal development teams post-handoff.</p>" },
+            ts: { title: "TypeScript Architecture", icon: "fa-brands fa-js", desc: "<p>TypeScript is non-negotiable in our development pods. We enforce strict type safety across our entire JavaScript ecosystem to catch critical errors during the compilation phase, long before they can reach production systems.</p><p>By defining explicit data interfaces, we create self-documenting codebases that allow massive enterprise engineering teams to collaborate safely. This type-driven approach drastically reduces runtime exceptions and API mismatch errors.</p>" },
+            flutter: { title: "Flutter / React Native", icon: "fa-solid fa-mobile-screen", desc: "<p>For native mobile deployments, CAELION utilizes Google's Flutter framework and React Native. We compile robust code into beautiful, high-performance applications for both iOS and Android stores simultaneously from a single codebase.</p><p>We leverage native custom rendering engines to build fluid, complex 60fps animations and custom spatial UI elements that standard mobile wrappers struggle to execute. This ensures your brand delivers a premium, native-feeling experience.</p>" },
+            tailwind: { title: "Tailwind / Storybook", icon: "fa-solid fa-wind", desc: "<p>We utilize Tailwind CSS as our utility-first styling engine. This completely eliminates bloated, unused CSS files and prevents global style conflicts within massive component libraries.</p><p>Alongside Tailwind, we use Storybook as an isolated component development environment for bulletproof UI/UX design libraries, powered by Vite's ultra-fast frontend tooling engine driving rapid module compilation limits.</p>" },
+            node: { title: "Node.js Pipelines", icon: "fa-brands fa-node-js", desc: "<p>Node.js powers our high-throughput, event-driven backend architectures. We design asynchronous operational pipelines that can handle millions of concurrent connections without blocking the main execution thread.</p><p>This ensures that your enterprise data APIs remain incredibly responsive, even during sudden, massive traffic spikes. Furthermore, our Node implementations are hardened with strict security middleware, memory leak prevention protocols, and continuous health monitoring.</p><p>We heavily utilize robust Node clusters for our custom e-commerce management platforms and fast-routing microservices.</p>" },
+            dotnet: { title: ".NET 8 Enterprise", icon: "fa-brands fa-microsoft", desc: "<p>For highly secure, multi-layered financial and heavy industrial pipelines, we deploy the C# .NET 8 framework. It provides military-grade memory safety, extreme processing speeds, and perfect integration with complex server architectures.</p><p>Our .NET pods build massive RESTful APIs and gRPC channels that enforce rigid domain-driven design principles. We leverage Entity Framework Core to manage complex relational database operations flawlessly.</p>" },
+            go: { title: "Go (Golang) Systems", icon: "fa-brands fa-golang", desc: "<p>When extreme scalability and low-latency concurrency are required, CAELION architects systems in Go. Originally designed by Google, Go allows our pods to compile incredibly lightweight, lightning-fast microservices.</p><p>We use Go to build high-performance network routers, real-time data streaming engines, and background workers that consume virtually zero server memory compared to traditional backend languages.</p>" },
+            python: { title: "Python / FastAPI", icon: "fa-brands fa-python", desc: "<p>Python serves as the programmatic baseline for our advanced artificial intelligence and machine learning pipelines. We utilize its vast ecosystem to process massive statistical deep learning loops and predictive enterprise analytics.</p><p>From training neural networks on multi-GPU clusters to deploying optimized FastAPI inference endpoints, our Python architectures deliver robust, production-ready AI capabilities directly into your business workflows. We recently utilized this stack to predict 5-year manufacturing data metrics.</p>" },
+            graphql: { title: "Spring Boot / GraphQL", icon: "fa-solid fa-diagram-project", desc: "<p>We implement GraphQL and gRPC to solve the over-fetching data problems inherent in legacy REST APIs. GraphQL allows your frontend applications to request exactly the data they need.</p><p>For massive enterprise structures running Java, we deploy Spring Boot to create highly resilient, modular backend systems capable of processing millions of payload transactions continuously without failure.</p>" },
+            openai: { title: "OpenAI / Claude Inference", icon: "fa-solid fa-brain", desc: "<p>We don't just build chatbots; we embed powerful large language models (LLMs) deeply into your operational software. We utilize OpenAI and Anthropic's Claude to power intelligent decision engines, automated document extraction, and context-aware enterprise search.</p><p>Our engineers implement strict prompt gating, token usage limits, and fallback strategies to ensure these models run cost-effectively and securely within your enterprise boundary.</p>" },
+            langchain: { title: "LangChain / LangGraph", icon: "fa-solid fa-link", desc: "<p>To build advanced AI-native applications, we utilize LangChain and LangGraph. These frameworks allow us to chain multiple LLM calls together with external calculation tools and proprietary enterprise databases.</p><p>We design persistent multi-agent structural nodes that can autonomously break down complex user requests, query your SQL databases for context, and generate highly accurate, mathematically sound responses.</p>" },
+            pinecone: { title: "Pinecone / Weaviate", icon: "fa-solid fa-database", desc: "<p>Modern semantic search and Retrieval-Augmented Generation (RAG) require high-density vector mapping. We deploy systems like Pinecone and Weaviate to store millions of text embeddings securely.</p><p>This architecture allows your AI applications to instantly retrieve highly relevant corporate documents, technical manuals, or past support tickets to provide the LLM with perfect context before it generates an answer.</p>" },
+            huggingface: { title: "vLLM / Hugging Face", icon: "fa-solid fa-face-smile", desc: "<p>When cloud-based LLMs pose a data privacy risk, we turn to Hugging Face to deploy locally contained, open-source models directly inside your private cloud infrastructure. We utilize vLLM for incredibly memory-efficient model inference.</p><p>We track all training telemetry variables and fine-tuning parameters using MLflow, ensuring that your custom models operate precisely on your intellectual property data layers without leaking to external public endpoints.</p>" },
+            postgres: { title: "PostgreSQL", icon: "fa-solid fa-database", desc: "<p>PostgreSQL is our default choice for relational data storage. It is a battle-tested, completely open-source database that enforces rock-solid ACID compliance and data integrity.</p><p>We architect complex, highly optimized SQL schemas equipped with proper indexing, partition strategies, and JSONB column support to handle millions of enterprise transactions safely without deadlocks.</p>" },
+            mongo: { title: "MongoDB NoSQL", icon: "fa-solid fa-envira", desc: "<p>For systems that require high horizontal agility and dynamic, unstructured data payloads, we deploy MongoDB. Its document-oriented architecture allows for incredibly fast read/write speeds.</p><p>We frequently utilize MongoDB clustering to support massive e-commerce product catalogs and real-time inventory tracking applications that require constant schema evolution.</p>" },
+            redis: { title: "Redis Caching", icon: "fa-solid fa-memory", desc: "<p>To protect primary databases from extreme read-heavy loads, we implement Redis as an ultra-fast, in-memory caching layer. Redis ensures that frequently accessed data states are retrieved in mere milliseconds.</p><p>Our pods use Redis to manage distributed user sessions, real-time leaderboards, and high-speed message broker queuing across decoupled microservices.</p>" },
+            snowflake: { title: "Snowflake / BigQuery", icon: "fa-solid fa-snowflake", desc: "<p>For massive enterprise data warehousing, we utilize Snowflake, BigQuery, and Databricks. Their cloud-native architectures separate compute power from storage, allowing your analytics teams to run massive SQL queries without slowing down production systems.</p><p>We build automated ETL pipelines using dbt and Airflow that transform and feed raw application telemetry data directly into the warehouse for long-term predictive business modeling.</p>" },
+            aws: { title: "AWS / Azure / GCP", icon: "fa-brands fa-aws", desc: "<p>CAELION engineers deploy cloud-agnostic architectural designs. By utilizing containerization and Infrastructure as Code, we ensure your platforms can migrate freely between AWS, Microsoft Azure, and Google Cloud Platform.</p><p>This multi-cloud strategy eliminates dangerous vendor lock-in, allowing your enterprise to leverage the best pricing tiers and specific machine learning hardware across different cloud providers.</p>" },
+            k8s: { title: "Kubernetes / Istio", icon: "fa-solid fa-dharmachakra", desc: "<p>Kubernetes manages our automated container orchestration. It allows your microservices to scale horizontally based on real-time CPU and memory loads automatically. We back this with Istio service meshes to handle structural routing encryption rules inside the pods.</p><p>If a specific pod crashes, Kubernetes instantly spins up a replacement, guaranteeing absolute high-availability and zero-downtime rolling deployments for your critical applications.</p>" },
+            terraform: { title: "Terraform IaC", icon: "fa-solid fa-code-merge", desc: "<p>We do not configure servers manually. We utilize HashiCorp Terraform to write robust Infrastructure as Code (IaC). Every server, database, and load balancer is provisioned deterministically via clear source templates.</p><p>This means your entire cloud architecture is version-controlled in Git, perfectly reproducible, and heavily audited for security flaws before deployment.</p>" },
+            github: { title: "ArgoCD / GitHub", icon: "fa-brands fa-github", desc: "<p>Our pods rely on heavily automated GitHub Actions, Helm, and ArgoCD pipelines to enforce strict GitOps delivery practices. The moment a developer merges code, automated scripts compile the application, run thousands of unit tests, and execute security vulnerability scans.</p><p>Only code that passes 100% of these validation gates is permitted to deploy to your staging or production environments.</p>" },
+            datadog: { title: "Datadog / OpenTelemetry", icon: "fa-solid fa-dog", desc: "<p>We deploy Datadog to create a unified monitor grid processing core runtime data metrics and establishing structured logging channels across all your containerized applications.</p><p>By utilizing OpenTelemetry, we guarantee a vendor-neutral telemetry data gathering standard, tracking distributed calls across complex microservices architectures without dropping single packet lines.</p>" },
+            snyk: { title: "Snyk / Vault", icon: "fa-solid fa-shield-halved", desc: "<p>Security scanning runs on every single build. We integrate Snyk directly into the CI/CD pipeline to catch CVE vulnerabilities, bad dependencies, and Open Web Application Security Project (OWASP) Top 10 risks instantly.</p><p>All application secrets, API keys, and database passwords are encrypted and isolated within HashiCorp Vault, ensuring that code repositories never contain exposed token credentials.</p>" },
+            grafana: { title: "Grafana / Prometheus", icon: "fa-solid fa-chart-pie", desc: "<p>Prometheus actively scrapes timeseries telemetry logs to track container compute health values. We route these dense metrics into Grafana to render complex systemic state changes visually via clean, actionable analytics interfaces.</p><p>If a threshold breaches, automated integration instantly coordinates developer on-call responses. We also utilize Chaos Engineering to deliberately inject calculated faults, guaranteeing the system is highly resilient before launch.</p>" },
+            social_linkedin: { title: "LinkedIn Ecosystem", icon: "fa-brands fa-linkedin", desc: "<p>Connect with our formal enterprise ecosystem page to follow executive announcements, high-level business developments, and strategic corporate setups. We post strategic insights tailored specifically for operational directors and chief technology officers.</p><p>Our corporate briefs highlight massive production modernizations, operational alliance pathways, and macro industry trends across software systems. We use this business node to coordinate large-scale engagement assessments with global enterprise networks.</p>" },
+            social_twitter: { title: "X (Twitter) Hub", icon: "fa-brands fa-x-twitter", desc: "<p>Follow our fast-paced tech microblog stream to monitor real-time platform updates, deployment logs, and system release sheets. We post direct code adjustments, template repository notices, and rapid architectural insights here.</p><p>Our developers share continuous technical updates detailing container compilation limits, database speed patches, and agent setup testing results. This hub provides instant engineering feedback tailored for builders.</p>" },
+            social_instagram: { title: "Instagram Visuals", icon: "fa-brands fa-instagram", desc: "<p>Take an inside visual tour through our advanced engineering workspaces, cultural testing spaces, and localized developer hub configurations. We highlight the daily reality of engineering pods operating across collaborative tech spaces.</p><p>See how our developer pods run high-velocity planning loops, map deep structural data dependency charts, and design interface assets. We share our architectural lifestyle through high-fidelity visual logs.</p>" },
+            social_youtube: { title: "YouTube Channel", icon: "fa-brands fa-youtube", desc: "<p>Stream full technical walkthrough video blocks, detailed load-testing exhibitions, and live cloud infrastructure provisioning sequences. Our video guides show raw terminal screens and architecture diagrams without corporate marketing filters.</p><p>Watch our principal system architects break down complex multi-tier platforms, context-aware workflow loops, and persistent vector tracking arrays. We detail structural engineering options clearly to support technical education.</p>" },
+            social_github: { title: "GitHub Repositories", icon: "fa-brands fa-github", desc: "<p>Inspect our public repositories containing cloud configuration templates, modular system frameworks, base component designs, and automation tools. We believe in providing concrete proof of code quality through public inspection pathways.</p><p>Our code templates leverage strict type safety rules, clear documentation metrics, and fully integrated automated testing validation scripts. Developers can clone these baseline systems to optimize their custom apps.</p>" },
+            legal_privacy: { title: "Data Privacy Framework", icon: "fa-solid fa-shield-halved", desc: "<p>Our international data processing infrastructure aligns precisely with validated data protection mandates, cloud data isolation parameters, and corporate encryption protocols.</p><p>We process personal information through secure storage networks, keeping localized transactional details isolated from external collection systems. Our operational workflows pass through automated safety filters to guarantee constant compliance rules.</p><p>Clients manage absolute controls over data records collection parameters, storage limits, and processing rights under explicit agreement terms. Review our data protection settings to control your systemic parameters safely.</p>" },
+            legal_cookie: { title: "Cookie Notice", icon: "fa-solid fa-cookie", desc: "<p>We implement diagnostic analytics cookies to trace localized interface performance variables, route validation paths, and evaluate viewport asset processing limits across systems.</p><p>Our tracking infrastructure records completely anonymous browser telemetry metrics to optimize system styling speeds, nav-link reactions, and modal window transitions. We do not transmit tracking information to external profiling networks.</p><p>Users maintain absolute authority to adjust localized structural tracking rules, state recording preferences, and cookie duration parameters via system panels.</p>" }
+        };
+
+        // Scroll Observers
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal");
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+            const revealObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+            reveals.forEach(reveal => { revealObserver.observe(reveal); });
+        });
+
+        // Tab & Navigation Logic
+        function toggleMenu() {
+            const nav = document.getElementById('nav-links');
+            if(window.innerWidth <= 768) nav.classList.toggle('active');
+        }
+
+        function openTab(evt, tabName, groupClass) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName(groupClass);
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = evt.currentTarget.parentElement.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+            document.getElementById(tabName).style.display = "block";
+            setTimeout(() => { document.getElementById(tabName).classList.add("active"); }, 10);
+            evt.currentTarget.classList.add("active");
+        }
+
+        function openSubTab(evt, tabName) {
+            let i, subTabContent, subTabLinks;
+            subTabContent = document.getElementsByClassName("sub-tab-content");
+            for (i = 0; i < subTabContent.length; i++) { subTabContent[i].style.display = "none"; }
+            subTabLinks = document.getElementsByClassName("sub-tab-btn");
+            for (i = 0; i < subTabLinks.length; i++) { subTabLinks[i].classList.remove("active"); }
+            document.getElementById(tabName).style.display = "flex"; 
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Modal Handlers
+        function openDataModal(key) {
+            const data = modalData[key];
+            if(!data) return;
+            document.getElementById('dd-modal-title').innerText = data.title;
+            document.getElementById('dd-modal-icon').className = data.icon;
+            document.getElementById('dd-modal-body').innerHTML = data.desc;
+            openModal('dynamic-data-modal');
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('show'); }, 10);
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
+            document.body.style.overflow = 'auto'; 
+        }
+
+        function closeModalOnOutsideClick(event, modalId) {
+            if (event.target.id === modalId) closeModal(modalId);
+        }
+    </script>
+</body>
+</html>
