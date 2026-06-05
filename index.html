@@ -6,9 +6,7 @@
     <title>CAELION | Advanced AI-Native Software Engineering</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* =========================================
-           Premium Design System & Variables
-           ========================================= */
+        
         :root {
             --primary: #0f172a; 
             --secondary: #1e293b;
@@ -34,7 +32,7 @@
             position: relative;
         }
 
-        /* Subtle Animated Background for Depth */
+        
         body::before {
             content: '';
             position: fixed;
@@ -45,28 +43,24 @@
             animation: bgFloat 20s infinite linear;
         }
 
-        /* =========================================
-           Advanced Animations & Page Routing
-           ========================================= */
+        
         @keyframes bgFloat { 0% { transform: rotate(0deg) translate(0, 0); } 50% { transform: rotate(180deg) translate(15px, 15px); } 100% { transform: rotate(360deg) translate(0, 0); } }
         @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes borderSpin { 100% { transform: rotate(360deg); } }
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes pulseGlow { 0% { text-shadow: 0 0 5px var(--accent-glow); } 50% { text-shadow: 0 0 20px var(--accent-glow); } 100% { text-shadow: 0 0 5px var(--accent-glow); } }
 
-        /* Scroll Reveal Classes */
+        
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.15s; }
         .reveal-delay-2 { transition-delay: 0.3s; }
 
-        /* Single Page Routing Classes */
+        
         .page-section { display: none; opacity: 0; }
         .page-section.active-page { display: block; animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
-        /* =========================================
-           2-Color Flowing Border Box (Premium Effect)
-           ========================================= */
+        
         .flow-box {
             position: relative;
             border-radius: 20px;
@@ -91,9 +85,7 @@
         /* Glassmorphism Utility */
         .glass { background: var(--glass-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); }
 
-        /* =========================================
-           Navigation
-           ========================================= */
+        
         nav {
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky;
@@ -104,24 +96,20 @@
         .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; position: relative; }
         
-        /* Active Nav Styling */
+        
         .nav-links a:hover, .nav-links a.active { color: var(--accent); }
         .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background-color: var(--accent); transition: width 0.3s ease-out; }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
         
         .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; }
 
-        /* =========================================
-           Slider Controls (Hidden on Desktop)
-           ========================================= */
+        
         .slider-controls { display: none; gap: 15px; margin-top: 2rem; justify-content: center; width: 100%; }
         .slider-arrow { background: var(--bg-white); border: 1px solid var(--border); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .slider-arrow i { color: orange; font-size: 1.3rem; transition: transform 0.3s; }
         .slider-arrow:hover { background: var(--bg-base); box-shadow: 0 6px 15px rgba(255, 165, 0, 0.2); border-color: orange; }
 
-        /* =========================================
-           Hero Section
-           ========================================= */
+
         .hero {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 0.98) 100%), 
                         url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2000&auto=format&fit=crop');
@@ -132,9 +120,7 @@
         .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); margin-bottom: 1.5rem; line-height: 1.1; font-weight: 900; background: linear-gradient(to right, #ffffff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { font-size: 1.2rem; color: #cbd5e1; max-width: 800px; margin: 0 auto; line-height: 1.8; font-weight: 300; }
 
-        /* =========================================
-           Stats Grid
-           ========================================= */
+        
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; padding: 0 5%; margin-top: -6rem; position: relative; z-index: 10; margin-bottom: 5rem; }
         .stat-card { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .stat-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.2rem; filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3)); }
@@ -142,9 +128,7 @@
         .stat-card h3 { color: var(--text-main); margin-bottom: 0.8rem; font-size: 1.2rem; font-weight: 800; }
         .stat-card p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
 
-        /* =========================================
-           General Sections & Split Layouts
-           ========================================= */
+        
         section { padding: 6rem 5%; }
         .section-header { text-align: center; margin-bottom: 4rem; position: relative; }
         .section-header h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--primary); margin-bottom: 1.2rem; font-weight: 900; letter-spacing: -1px; }
@@ -157,9 +141,7 @@
         .split-content h2 { font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem; line-height: 1.2; font-weight: 900; letter-spacing: -1px; }
         .split-content p { font-size: 1.15rem; color: var(--text-main); margin-bottom: 1.5rem; line-height: 1.8; }
 
-        /* =========================================
-           Timeline Grid (How to Engage)
-           ========================================= */
+        
         .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
         .timeline-card { padding: 3rem 2rem; border-radius: 20px; position: relative; overflow: hidden; }
         .step-number { position: absolute; top: -15px; right: -10px; font-size: 8rem; font-weight: 900; color: rgba(14, 165, 233, 0.04); line-height: 1; transition: color 0.5s; z-index: 0; }
@@ -168,9 +150,7 @@
         .timeline-card h3 { font-size: 1.5rem; color: var(--primary); margin-bottom: 1rem; position: relative; z-index: 2; font-weight: 800; }
         .timeline-card p { font-size: 1.05rem; color: var(--text-main); position: relative; z-index: 2; line-height: 1.7; }
 
-        /* =========================================
-           Tabs & The Delivery Pod
-           ========================================= */
+        
         .tab-container { max-width: 1100px; margin: 0 auto; border-radius: 20px; overflow: hidden; margin-bottom: 3rem; }
         .tab-buttons { display: flex; border-bottom: 1px solid rgba(255,255,255,0.4); flex-wrap: wrap; background: rgba(255,255,255,0.3); }
         .tab-btn { flex: 1; min-width: 200px; padding: 1.8rem 1rem; border: none; background: transparent; font-size: 1.1rem; font-weight: 800; color: var(--text-main); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
@@ -185,9 +165,7 @@
         .feature-list li strong { font-size: 1.3rem; color: var(--primary); display: block; margin-bottom: 0.8rem; font-weight: 800; }
         .feature-list li p { font-size: 1rem; line-height: 1.6; }
 
-        /* =========================================
-           Tech Stats & Small Grids
-           ========================================= */
+        
         .tech-stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 4rem; }
         .ts-card { background: white; border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center; transition: all 0.4s; box-shadow: 0 8px 25px rgba(0,0,0,0.02); border: 1px solid var(--border); }
         .ts-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(14,165,233,0.1); }
@@ -208,9 +186,7 @@
         .tech-item:hover { transform: translateY(-10px) scale(1.03); border-color: var(--accent); box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15); z-index: 2; }
         .tech-item:hover i { color: var(--accent); transform: scale(1.1); }
 
-        /* =========================================
-           Contact Form
-           ========================================= */
+        
         .contact-container { max-width: 650px; margin: 0 auto; background: white; padding: 4rem 3.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 25px 60px rgba(0,0,0,0.05); position: relative; overflow: hidden; margin-bottom: 3rem; }
         .contact-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--gradient-flow); background-size: 200% 200%; animation: gradientMove 3s ease infinite; }
         .form-group { margin-bottom: 2rem; }
@@ -220,9 +196,7 @@
         .submit-btn { width: 100%; padding: 1.5rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: all 0.4s; text-transform: uppercase; letter-spacing: 1px; }
         .submit-btn:hover { background: var(--accent); box-shadow: 0 15px 30px var(--accent-glow); transform: translateY(-2px); }
 
-        /* =========================================
-           Footer
-           ========================================= */
+        
         .site-footer { width: 100%; background: var(--primary); color: white; position: relative; }
         .footer-top { padding: 6rem 5% 4rem 5%; }
         .footer-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5rem; flex-wrap: wrap; gap: 3rem; }
@@ -252,9 +226,7 @@
         .legal-links a:hover { color: white; }
         .footer-brand-text { font-weight: 800; font-size: 1.2rem; color: white; margin-bottom: 0.8rem; letter-spacing: 0.5px; }
 
-        /* =========================================
-           Rich Visual Glass Modals
-           ========================================= */
+        
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 3000; display: none; justify-content: center; align-items: center; padding: 20px; opacity: 0; transition: opacity 0.4s ease; }
         .modal-overlay.show { opacity: 1; }
         .modal-content { background: rgba(255,255,255,0.98); width: 100%; max-width: 1050px; max-height: 85vh; border-radius: 24px; padding: 5rem; overflow-y: auto; position: relative; animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 40px 100px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); }
@@ -283,16 +255,14 @@
         .img-card .body { padding: 2.5rem; flex-grow: 1; display: flex; flex-direction: column; }
         .img-card .metric { display: inline-block; background: var(--primary); color: white; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 800; font-size: 0.95rem; align-self: flex-start; letter-spacing: 1px; margin-top: auto; }
 
-        /* Floating Socials */
+        
         .floating-socials { position: fixed; bottom: 40px; right: 40px; display: flex; flex-direction: column; gap: 15px; z-index: 2500; }
         .social-btn { width: 60px; height: 60px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(10px); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid var(--glass-border); }
         .social-btn:hover { transform: translateY(-10px) scale(1.15); color: white; border-color: transparent; }
         .social-btn.whatsapp:hover { background: #25D366; box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4); }
         .social-btn.linkedin:hover { background: #0077b5; box-shadow: 0 15px 30px rgba(0, 119, 181, 0.4); }
 
-        /* =========================================
-           MOBILE SPECIFIC OPTIMIZATIONS
-           ========================================= */
+        
         @media (max-width: 1024px) {
             .footer-grid { grid-template-columns: repeat(3, 1fr); }
             .split-section { grid-template-columns: 1fr; text-align: center; }
@@ -300,18 +270,18 @@
         }
 
         @media (max-width: 768px) {
-            /* Mobile Bouncy Scroll Reveal */
+            
             .reveal { transform: translateY(60px) scale(0.92); transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
             .reveal.active { transform: translateY(0) scale(1); }
 
-            /* Slider Controls below boxes */
+            
             .slider-controls { display: flex; }
 
-            /* Subtle mobile ambient background shift */
+            
             body { animation: mobileBgShift 15s ease-in-out infinite alternate; }
             @keyframes mobileBgShift { 0% { background-color: var(--bg-base); } 100% { background-color: #e2e8f0; } }
 
-            /* Custom Touch Vibration / Pop Effect */
+           
             @keyframes mobileVibrate {
                 0% { transform: translate(0) scale(0.98); }
                 25% { transform: translate(-2px, 1px) scale(0.98); }
@@ -361,7 +331,7 @@
 </head>
 <body>
 
-    <!-- Top Navigation -->
+    
     <nav class="glass">
         <div class="logo" onclick="window.location.hash='#home'; router();"><i class="fa-solid fa-layer-group"></i> CAELION</div>
         <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
@@ -375,7 +345,6 @@
         </ul>
     </nav>
 
-    <!-- Main Dynamic Content Wrapper -->
     <main id="main-content">
         
         <!-- PAGE 1: HOME -->
@@ -393,7 +362,7 @@
             </div>
         </div>
 
-        <!-- PAGE 2: PHILOSOPHY -->
+        
         <div id="philosophy" class="page-section">
             <section class="split-section" style="padding-top: 6rem;">
                 <div class="split-content reveal">
@@ -408,7 +377,7 @@
             </section>
         </div>
 
-        <!-- PAGE 3: ENGAGEMENT -->
+        
         <div id="engagement" class="page-section">
             <section class="glass" style="margin: 4rem 5%; border-radius: 30px;">
                 <div class="section-header reveal">
@@ -433,7 +402,7 @@
                         <h3>Advisory Retainer</h3><p>Fractional CTO deployment. Includes monthly architecture reviews, technology strategy, and maintaining a running Architecture Decision Log.</p>
                     </div></div>
                 </div>
-                <!-- Pagination indicators -->
+                
                 <div class="slider-controls reveal reveal-delay-2">
                     <button class="slider-arrow" onclick="scrollCarousel('engage-slider', -1)"><i class="fa-solid fa-chevron-left"></i></button>
                     <button class="slider-arrow" onclick="scrollCarousel('engage-slider', 1)"><i class="fa-solid fa-chevron-right"></i></button>
@@ -493,7 +462,7 @@
             </section>
         </div>
 
-        <!-- PAGE 4: STANDARDS -->
+        
         <div id="standards" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
@@ -515,7 +484,7 @@
             </section>
         </div>
 
-        <!-- PAGE 5: TECH STACK -->
+        
         <div id="stack" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
@@ -595,7 +564,7 @@
             </section>
         </div>
 
-        <!-- PAGE 6: CONTACT HR -->
+        
         <div id="contact" class="page-section">
             <section style="padding-top: 6rem;">
                 <div class="section-header reveal">
@@ -615,7 +584,7 @@
 
     </main>
 
-    <!-- Dynamic Enterprise Footer Layout -->
+    
     <footer class="site-footer">
         <div class="footer-top">
             <div class="footer-top-row reveal">
@@ -681,24 +650,20 @@
                 <a onclick="openDataModal('legal_cookie')" target="_blank">Cookie Notice <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem;"></i></a>
             </div>
             
-            <!-- CAELION FOOTER BRAND TEXT FROM IMAGE -->
+            
             <div class="footer-brand-text">CAELION — caelion.in | info@caelion.in</div>
             
             <p class="copyright">© 2026. CAELION Custom Software Engineering - caelion.in | All architectural blueprints strictly regulated.</p>
         </div>
     </footer>
 
-    <!-- Floating Social Controls -->
+    
     <div class="floating-socials">
         <a href="https://wa.me/917989004552" target="_blank" class="social-btn whatsapp glass" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         <a href="https://linkedin.com" target="_blank" class="social-btn linkedin glass" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
     </div>
 
-    <!-- =========================================
-         RICH INTERACTIVE MODALS (LONG DATA INTEGRATION)
-         ========================================= -->
-
-    <!-- Dynamic "Long Data" Tech Stack Modal -->
+    
     <div id="dynamic-data-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'dynamic-data-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('dynamic-data-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -708,7 +673,7 @@
         </div>
     </div>
 
-    <!-- Rich Contact Details Modal -->
+    
     <div id="contact-details-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'contact-details-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('contact-details-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -737,7 +702,7 @@
         </div>
     </div>
 
-    <!-- Rich Case Studies Modal -->
+   
     <div id="case-studies-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'case-studies-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('case-studies-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -771,7 +736,7 @@
         </div>
     </div>
 
-    <!-- Rich Industries Modal -->
+    
     <div id="industries-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'industries-modal')">
         <div class="modal-content glass" style="max-width: 1300px;">
             <button class="close-modal" onclick="closeModal('industries-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -802,7 +767,7 @@
         </div>
     </div>
 
-    <!-- Rich Careers Modal -->
+    
     <div id="careers-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'careers-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('careers-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -837,7 +802,7 @@
         </div>
     </div>
 
-    <!-- Long Data Text Modals -->
+    
     <div id="about-caelion-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event, 'about-caelion-modal')">
         <div class="modal-content glass">
             <button class="close-modal" onclick="closeModal('about-caelion-modal')"><i class="fa-solid fa-xmark"></i></button>
@@ -884,9 +849,9 @@
         </div>
     </div>
 
-    <!-- Application Script Logic & Single Page Router -->
+   
     <script>
-        // LONG DATA DICTIONARY 
+        
         const modalData = {
             react: { title: "React / Next.js", icon: "fa-brands fa-react", desc: "<p>React and Next.js form the absolute core of our frontend architecture. We utilize these battle-tested frameworks to build highly dynamic, SEO-optimized web applications that scale effortlessly under heavy enterprise loads.</p><p>By leveraging advanced Next.js server-side rendering (SSR) and static site generation (SSG), we ensure that your platforms deliver sub-second initial load times. Our React architectures are strictly typed, utilizing deep component isolation to prevent cascade rendering failures.</p><p>We don't just build pages; we build cohesive design systems that maintain rigorous enterprise-level structural integrity and global accessibility compliance from the very first commit.</p>" },
             vue: { title: "Vue.js Ecosystem", icon: "fa-brands fa-vuejs", desc: "<p>We deploy the Vue framework when projects require exceptional reactive speed and lightweight bundle sizes. Vue’s progressive architecture allows our engineers to incrementally modernize legacy applications without forcing a complete system rewrite.</p><p>Using the Composition API, we build complex state-management systems that remain highly readable and easy to test. This ensures long-term code maintainability for your internal development teams post-handoff.</p>" },
@@ -922,7 +887,7 @@
             legal_cookie: { title: "Cookie Notice", icon: "fa-solid fa-cookie", desc: "<p>We implement diagnostic analytics cookies to trace localized interface performance variables, route validation paths, and evaluate viewport asset processing limits across systems.</p><p>Our tracking infrastructure records completely anonymous browser telemetry metrics to optimize system styling speeds, nav-link reactions, and modal window transitions. We do not transmit tracking information to external profiling networks.</p><p>Users maintain absolute authority to adjust localized structural tracking rules, state recording preferences, and cookie duration parameters via system panels.</p>" }
         };
 
-        // Scroll Observers
+       
         function initObservers() {
             const reveals = document.querySelectorAll(".reveal:not(.active)");
             const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
@@ -937,7 +902,7 @@
             reveals.forEach(reveal => { revealObserver.observe(reveal); });
         }
 
-        // Horizontal slider utility for pagination arrows
+        
         function scrollCarousel(sliderId, direction) {
             const slider = document.getElementById(sliderId);
             if (!slider) return;
@@ -945,9 +910,7 @@
             slider.scrollBy({ left: direction * (cardWidth + 24), behavior: 'smooth' });
         }
 
-        // =========================================
-        // Hash Router Implementation
-        // =========================================
+        
         function router() {
             let hash = window.location.hash || '#home';
             
@@ -991,7 +954,7 @@
         window.addEventListener('hashchange', router);
         window.addEventListener('load', router);
 
-        // Standard UI Functions
+        
         function toggleMenu() {
             const nav = document.getElementById('nav-links');
             if(window.innerWidth <= 768) nav.classList.toggle('active');
