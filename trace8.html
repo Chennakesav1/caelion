@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trace 8 agentic</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+    .body { background: var(--bg); color: var(--white); font-family: var(--sans-serif); }
+    .rule-accent { width: 50px; height: 4px; background: var(--navy); margin-bottom: 1.5rem; }
+    .section-header { text-align: center; max-width: 600px; margin: 0 auto 2rem auto; }
+    .section-header h2 { font-family: var(--serif); font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+    .section-header p { font-size: 1.1rem; font-weight: 300; color: var(--light-grey); line-height: 1.6; }
+    .metrics-row { display: flex; gap: 2rem; margin-top: 1.5rem; }
+    .metric-item { background: var(--white); border: 1px solid var(--mid-grey); border-radius: 8px; padding: 1.5rem; flex: 1; text-align: center; }
+    .metric-val { font-size: 1.8rem; font-weight: 700; color: var(--navy); }
+    .metric-label { font-size: 0.9rem; font-weight: 500 ; color: var(--mid-grey); margin-top: 0.5rem; }
+    .metric-desc { font-size: 0.85rem; color: var(--light-grey); margin-top: 0.25rem; }
+    .insights-grid { display: grid; gap: 2rem; grid-template-columns    : repeat(auto-fit, minmax(300px, 1fr)); }
+    .insight-card { background: var(--lightgrey); border: 1px solid var(--mid-grey); border-radius: 8px; overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+    .ic-img img { width: 100%; height: 200px; object-fit: cover; }
+    .ic-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; background: skyblue; }
+
+    
+    .ic-tag { font-size: 0.75rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .ic-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .ic-desc { font-size: 0.9rem; color: var(--light-grey); flex: 1; margin-bottom: 1rem; }
+    .ic-meta { font-size: 0.85rem; font-weight: 500; color: var(--navy); }    
+    .metric-item { transition: var(--transition); }
+    .metric-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .insight-card { transition: var(--transition); }    
+    .insight-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    :root {
+            --navy:          #00338D; 
+            --cobalt:        #005EB8; 
+            --sky:           #00B0E6; 
+            --purple:        #483698; 
+            --white:         #FFFFFF;
+            --light-grey:    #F5F5F5;
+            --mid-grey:      #E0E0E0;
+            --dark-grey:     #4A4A4A;
+            --charcoal:      #1A1A1A;
+            --serif:         'Playfair Display', Georgia, serif;
+            --sans:          'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+            --transition:    all 0.3s ease-in-out;
+        }
+
+        *, *::before, *::after { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            font-family: var(--sans);
+            color: var(--charcoal);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Routing system styles */
+        .page-view { display: none; opacity: 0; animation: fadePageIn 0.4s forwards; }
+        .page-view.active { display: block; }
+        
+        @keyframes fadePageIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        .container { max-width: 1320px; margin: 0 auto; padding: 0 5%; }
+        .rule-accent { width: 60px; height: 4px; background: var(--sky); margin-bottom: 1.5rem; }
+        .rule-full { width: 100%; height: 1px; background: var(--mid-grey); margin: 2rem 0; }
+        
+        .tag {
+            display: inline-block; font-family: var(--sans); font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--cobalt); margin-bottom: 1rem;
+        }
+
+        
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            font-family: var(--sans); font-size: 0.9rem; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; padding: 1rem 2rem; text-decoration: none; cursor: pointer; transition: var(--transition); border-radius: 4px;
+        }
+        .btn-primary { background: var(--navy); color: var(--white); border: 2px solid var(--navy); }
+        .btn-primary:hover { background: var(--cobalt); border-color: var(--cobalt); color: var(--white); }
+        .btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+        .btn-outline:hover { background: var(--navy); color: var(--white); }
+        .btn-link { background: none; color: var(--navy); padding: 0; border: none; border-bottom: 2px solid var(--sky); padding-bottom: 2px; border-radius: 0; }
+        .btn-link:hover { color: var(--sky); border-color: var(--navy); }
+        .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--white); border: 1px solid var(--mid-grey); border-top: 4px solid var(--navy); border-radius: 8px; overflow: hidden; }
+        .metric-item { padding: 3rem 2rem; border-right: 1px solid var(--mid-grey); }
+        .metric-item:last-child { border-right: none; }
+        .metric-val { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; color: var(--navy); line-height: 1; margin-bottom: 0.5rem; }
+        .metric-label { font-size: 1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 0.5rem; }
+        .metric-desc { font-size: 0.9rem; color: var(--dark-grey); }
+        .section { padding: 6rem 0; }
+        .section-light { background: var(--light-grey); }
+        .section-header { margin-bottom: 4rem; max-width: 800px; }
+        .section-header h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.8rem); color: var(--navy); line-height: 1.2; margin-bottom: 1rem; }
+        .section-header p { font-size: 1.1rem; color: var(--dark-grey); }
+
+        
+        .top-utility { background: var(--charcoal); padding: 0.4rem 5%; display: flex; justify-content: flex-end; gap: 2rem; }
+        .top-utility a { color: #ccc; font-size: 0.75rem; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); }
+        .top-utility a:hover { color: var(--white); }
+
+        
+        .navbar { background: var(--white); border-bottom: 1px solid var(--mid-grey); position: sticky; top: 0; z-index: 2000; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        
+        .nav-left { display: flex; align-items: center; gap: 1rem; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-box { width: 40px; height: 40px; background: var(--navy); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1.1rem; border-radius: 4px; }
+        .logo-text { font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; color: var(--navy); text-transform: uppercase; }
+
+        .nav-links { display: flex; height: 100%; list-style: none; align-items: center; }
+        .nav-item { height: 100%; display: flex; align-items: center; justify-content: center; }
+        
+        .nav-link { 
+            height: 100%; display: flex; align-items: center; padding: 0 1.5rem; font-size: 0.9rem; font-weight: 700;
+            color: var(--charcoal); text-transform: uppercase; letter-spacing: 0.5px; text-decoration: none; cursor: pointer;
+            border-bottom: 4px solid transparent; transition: var(--transition);
+        }
+        .nav-item:hover .nav-link, .nav-link.active { color: var(--navy); border-bottom-color: var(--sky); }
+
+        .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--navy); cursor: pointer; background: none; border: none; padding: 0.5rem; }
+
+        
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; width: 100%; background: var(--white); border-top: 1px solid var(--mid-grey);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05); display: none; opacity: 0; transform: translateY(10px); transition: var(--transition); pointer-events: none;
+        }
+        
+        @media (min-width: 769px) {
+            .nav-item:hover .mega-menu { display: block; opacity: 1; transform: translateY(0); pointer-events: auto; }
+        }
+        
+        .mega-menu-inner { display: grid; grid-template-columns: 1fr 3fr; gap: 4rem; padding: 3rem 5%; }
+        .mega-title { font-family: var(--serif); font-size: 2rem; color: var(--navy); margin-bottom: 1rem; }
+        .mega-desc { font-size: 0.95rem; color: var(--dark-grey); margin-bottom: 1.5rem; }
+        
+        .mega-grid { display: grid; grid-template-rows: repeat(1, 1fr); gap: 1rem; }
+        .mega-col h4 { font-size: 0.85rem; font-weight: 700; color: var(--sky); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.2rem; border-bottom: 1px solid var(--mid-grey); padding-bottom: 0.5rem; }
+        .mega-col ul { list-style: none; }
+        .mega-col ul li { margin-bottom: 0.8rem; }
+        .mega-col ul a { color: var(--charcoal); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: var(--transition); display: block; }
+        .mega-col ul a:hover { color: var(--cobalt); padding-left: 5px; }
+        .logo-img { display: block; width: 120px; height: auto; }
+        .rule-accent { width: 60px; height: 4px; background: var(--sky); margin-bottom: 1.5rem; }
+        .rule-accent p { font-size: 1.1rem; font-weight: 300; color: black; line-height: 1.6; }
+
+        .footer { background: var(--navy); color: var(--white); padding: 4rem 0 2rem; }
+        .footer-logo-container { margin-bottom: 3rem; display: flex; align-items: center; gap: 12px;}
+        .footer-logo-container .logo-box { background: var(--white); color: var(--navy); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border-radius: 4px;}
+        .footer-logo-container .logo-text { color: var(--white); font-size: 1.4rem; font-weight: 700; letter-spacing: 3px; }
+        
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+        .footer-col h4 { font-size: 1.2rem; color: var(--white); margin-bottom: 1.5rem; font-weight: 700; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 1rem; }
+        .footer-col ul a { color: var(--white); text-decoration: none; font-size: 1rem; transition: var(--transition); display: inline-block; }
+        .footer-col ul a:hover { text-decoration: underline; color: var(--sky); }
+        
+        .footer-socials { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+        .footer-socials a { width: 50px; height: 50px; border: 1px solid var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); text-decoration: none; transition: var(--transition); font-size: 1.2rem; }
+        .footer-socials a:hover { background: var(--white); color: var(--navy); }
+        
+        .footer-legal-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2.5rem; margin-bottom: 3rem; }
+        .footer-legal-links a { color: var(--white); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: var(--transition);}
+        .footer-legal-links a:hover { text-decoration: underline; color: var(--sky);}
+
+        .footer-copyright { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; text-align: left; font-size: 0.85rem; color: #e0e0e0; line-height: 1.6; }
+        
+          
+
+
+
+
+
+</style>
+
+<body>
+
+     <nav class="navbar">
+        <div class="container nav-container">
+            
+            <div class="nav-left">
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <a href="#home" target="_blank" class="logo">
+                    
+                    <img class="logo-img" src="logo-main.jpeg" alt="caelion logo">
+                </a>
+            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-target="services">About</a>
+                    
+                </li>
+                <li class="nav-item">
+                    <a href="#industries" class="nav-link" data-target="industries">Platforms</a>
+                    <div class="mega-menu">
+                        <div class="container mega-menu-inner">
+                            
+                            <div class="mega-grid">
+                                <div class="mega-col">
+                                
+                                    <ul>
+                                        <li><a href="trace8.html" target="_blank">Trace 8 agentic</a></li>
+                                        <li><a href="cube23.html" target="_blank">CUBE23</a></li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#insights" class="nav-link" data-target="insights">Our partner Ecosystem</a>
+                    
+                </li>
+                <li class="nav-item">
+                    <a href="#about" target="_blank" class="nav-link" style="border: none;">comapny </a>
+                    <div class="mega-menu">
+                        <div class="container mega-menu-inner">
+                            
+                            <div class="mega-grid">
+                                <div class="mega-col">
+                                    
+                                    <ul>
+                                        <li><a href="#dbreifs" target="_blank">Values</a></li>
+                                        <li><a href="#alumni" target="_blank">Missions</a></li>
+                                        <li><a href="#about" target="_blank">Our Team</a></li>
+                                        <li><a href="#locations" target="_blank">Locations</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+             <li class="nav-item">
+                    <a href="#about" target="_blank" class="nav-link" style="border: none;">Contact Us</a>
+                    <div class="mega-menu">
+                        <div class="container mega-menu-inner">
+                            
+                            <div class="mega-grid">
+                                <div class="mega-col">
+                                    
+                                    <ul>
+                                        <li><a href="#rfp" target="_blank">Chat with US</a></li>
+                                        <li><a href="#rfp" target="_blank">Book A Demo for Sales</a></li>
+                                        <li><a href="#contact" target="_blank">Contact</a></li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            
+        </div>
+    </nav>
+     <section class="section">
+                <div class="container">
+                    <div class="section-header">
+                        <div class="rule-accent"></div>
+                        <h2>Our AI-Native Design Philosophy </h2>
+                        <p>At CAELION, our approach to software engineering is rooted in a deliberate and advanced design philosophy, ensuring that every solution we craft is not merely functional but also intelligent, scalable, and future-proof.</p>
+                    </div>
+
+                    <div class="metrics-row" style="margin-bottom: 4rem;">
+                        <div class="metric-item">
+                            <div class="metric-val">3.4x</div>
+                            <div class="metric-label">Faster Delivery</div>
+                            <div class="metric-desc">AI-augmented SDLC vs. traditional teams</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-val">60-80%</div>
+                            <div class="metric-label">Cycle Time Reduction</div>
+                            <div class="metric-desc">Across IT ops, service, and data</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-val">87%</div>
+                            <div class="metric-label">Not AI-Ready</div>
+                            <div class="metric-desc">Lack production ML pipelines</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-val">100%</div>
+                            <div class="metric-label">Senior Engineers</div>
+                            <div class="metric-desc">6+ years of production experience minimum</div>
+                        </div>
+                    </div>
+
+                    <div class="insights-grid">
+                        <a href="#dbriefs" target="_blank" class="insight-card">
+                            <div class="ic-img"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800" alt="Delivery Pod"></div>
+                            <div class="ic-body">
+                                <span class="ic-tag">Methodology</span>
+                                <h3 class="ic-title">The Delivery Pod Architecture</h3>
+                                <p class="ic-desc">Self-contained, autonomous teams shipping every 2 weeks. Learn how our pod leads, full-stack developers, and AI engineers operate.</p>
+                                <div class="ic-meta">Read Article ➔</div>
+                            </div>
+                        </a>
+                        <a href="#dbriefs" target="_blank" class="insight-card">
+                            <div class="ic-img"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800" alt="Code Standards"></div>
+                            <div class="ic-body">
+                                <span class="ic-tag">Engineering</span>
+                                <h3 class="ic-title">Strict Engineering Standards</h3>
+                                <p class="ic-desc">Built to scale. Engineered to last. Why we enforce ESLint gates, 80% minimum test coverage, and SAST/DAST security scanning on every build.</p>
+                                <div class="ic-meta">Read Article ➔</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+             <footer class="footer">
+        <div class="container">
+            <div class="footer-logo-container">
+                <div class="logo">
+                    
+                    <img class="logo-img" src="logo-main.jpeg" alt="caelion logo">
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-col" style="grid-column: 1 / span 1;"></div> <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#locations" target="_blank">Locations</a></li>
+                        <li><a href="#contact" target="_blank">Contact Us</a></li>
+                        <li><a href="#rfp" target="_blank">Submit RFP</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Media</h4>
+                    <ul>
+                        <li><a href="#newsroom" target="_blank">Press Release</a></li>
+                        <li><a href="#insights" target="_blank">CAELION Insights</a></li>
+                        <li><a href="#dbriefs" target="_blank">Dbriefs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#careers" target="_blank">Careers</a></li>
+                        <li><a href="#about" target="_blank">About Us</a></li>
+                        <li><a href="#alumni" target="_blank">Alumni</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-socials">
+                <a href="#" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+
+            <div class="footer-legal-links">
+                <a href="#legal" target="_blank">Legal</a>
+                <a href="#privacy" target="_blank">Privacy</a>
+                <a href="#accessibility" target="_blank">Accessibility</a>
+                <a href="#governance" target="_blank">Governance</a>
+                <a href="#glossary" target="_blank">Glossary</a>
+                <a href="#help" target="_blank">Help</a>
+                <a href="#cookies" target="_blank">Cookies Settings</a>
+            </div>
+
+            <div class="footer-copyright">
+                &copy; 2026 CAELION, a global software engineering firm. All rights reserved. For more detail about our structure please visit our governance page.
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

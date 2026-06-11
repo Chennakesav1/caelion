@@ -11,7 +11,7 @@
         
         :root {
             --navy:          #00338D; 
-            --cobalt:        #005EB8; 
+            --cobalt:        #005EB8;
             --sky:           #00B0E6; 
             --purple:        #483698; 
             --white:         #FFFFFF;
@@ -85,7 +85,7 @@
         .logo-text { font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; color: var(--navy); text-transform: uppercase; }
 
         .nav-links { display: flex; height: 100%; list-style: none; align-items: center; }
-        .nav-item { height: 100%; display: flex; align-items: center; }
+        .nav-item { height: 100%; display: flex; align-items: center; justify-content: center; }
         
         .nav-link { 
             height: 100%; display: flex; align-items: center; padding: 0 1.5rem; font-size: 0.9rem; font-weight: 700;
@@ -110,7 +110,7 @@
         .mega-title { font-family: var(--serif); font-size: 2rem; color: var(--navy); margin-bottom: 1rem; }
         .mega-desc { font-size: 0.95rem; color: var(--dark-grey); margin-bottom: 1.5rem; }
         
-        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .mega-grid { display: grid; grid-template-rows: repeat(1, 1fr); gap: 1rem; }
         .mega-col h4 { font-size: 0.85rem; font-weight: 700; color: var(--sky); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.2rem; border-bottom: 1px solid var(--mid-grey); padding-bottom: 0.5rem; }
         .mega-col ul { list-style: none; }
         .mega-col ul li { margin-bottom: 0.8rem; }
@@ -124,11 +124,11 @@
         .hero-gradient { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,51,141,1) 0%, rgba(0,51,141,0.8) 50%, transparent 100%); }
         .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 5rem 0; }
         .hero-sub .hero-content { padding: 0; }
-        .hero h1 { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero h1 { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 0.9; margin-bottom: 1.2rem; }
         .hero p { font-size: 1.2rem; font-weight: 300; margin-bottom: 2.5rem; line-height: 1.7; color: var(--light-grey); }
 
         
-        .topic-pills { background: var(--light-grey); padding: 1.5rem 0; border-bottom: 1px solid var(--mid-grey); }
+        .topic-pills { background: var(--light-grey); padding: 4rem 0; border-bottom: 1px solid var(--mid-grey); }
         .pill-track { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none; }
         .pill-track::-webkit-scrollbar { display: none; }
         .pill { background: var(--white); border: 1px solid var(--mid-grey); padding: 0.6rem 1.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700; color: var(--navy); text-decoration: none; white-space: nowrap; transition: var(--transition); }
@@ -252,6 +252,8 @@
         .cookie-banner a { color: var(--navy); font-weight: 700; text-decoration: none; }
         .cookie-banner a:hover { text-decoration: underline; }
 
+        .logo-img { display: block; width: 120px; height: auto; }
+
         
         @media (max-width: 1024px) {
             .slide { min-width: 100%; }
@@ -314,7 +316,7 @@
 <body>
 
     <div class="top-utility">
-        <a href="#locations" target="_blank">Contact</a>
+        <a href="#contact" target="_blank">Contact</a>
         <a href="#careers" target="_blank">Careers</a>
         <a href="mailto:info@caelion.in">info@caelion.in</a>
     </div>
@@ -327,44 +329,28 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
                 <a href="#home" target="_blank" class="logo">
-                    <div class="logo-box"><i class="fa-solid fa-layer-group"></i></div>
-                    <div class="logo-text">CAELION</div>
+                    
+                    <img class="logo-img" src="logo-main.jpeg" alt="caelion logo">
                 </a>
             </div>
             
             <ul class="nav-links" id="navLinks">
                 <li class="nav-item">
-                    <a href="#services" class="nav-link" data-target="services">Services</a>
+                    <a href="#" class="nav-link" data-target="services">About</a>
+                    
+                </li>
+                <li class="nav-item">
+                    <a href="#industries" class="nav-link" data-target="industries">Platforms</a>
                     <div class="mega-menu">
                         <div class="container mega-menu-inner">
-                            <div>
-                                <h2 class="mega-title">Services</h2>
-                                <p class="mega-desc">End-to-end cloud-native monolith refactoring, high-frequency database engineering, and core AI engine pipelines.</p>
-                                <a href="#services" target="_blank" class="btn-link">View all services <i class="fa-solid fa-arrow-right"></i></a>
-                            </div>
+                            
                             <div class="mega-grid">
                                 <div class="mega-col">
-                                    <h4>Engineering</h4>
+                                
                                     <ul>
-                                        <li><a href="#custom-software" target="_blank">Custom Software Products</a></li>
-                                        <li><a href="#legacy-modernization" target="_blank">Legacy Modernization</a></li>
-                                        <li><a href="#cloud-devops" target="_blank">Cloud & DevOps</a></li>
-                                    </ul>
-                                </div>
-                                <div class="mega-col">
-                                    <h4>Artificial Intelligence</h4>
-                                    <ul>
-                                        <li><a href="#ai-platforms" target="_blank">AI-Native Platforms</a></li>
-                                        <li><a href="#machine-learning" target="_blank">Machine Learning Pipelines</a></li>
-                                        <li><a href="#intelligent-automation" target="_blank">Intelligent Automation</a></li>
-                                    </ul>
-                                </div>
-                                <div class="mega-col">
-                                    <h4>Engagement Models</h4>
-                                    <ul>
-                                        <li><a href="#rapid-assessment" target="_blank">Rapid Assessment</a></li>
-                                        <li><a href="#capability-pods" target="_blank">Capability Pods</a></li>
-                                        <li><a href="#advisory-retainer" target="_blank">Advisory Retainer</a></li>
+                                        <li><a href="trace8.html" target="_blank">Trace 8 agentic</a></li>
+                                        <li><a href="cube23.html" target="_blank">CUBE23</a></li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -372,56 +358,51 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a href="#industries" class="nav-link" data-target="industries">Industries</a>
+                    <a href="#insights" class="nav-link" data-target="insights">Our partner Ecosystem</a>
+                    
+                </li>
+                <li class="nav-item">
+                    <a href="#about" target="_blank" class="nav-link" style="border: none;">comapny </a>
                     <div class="mega-menu">
                         <div class="container mega-menu-inner">
-                            <div>
-                                <h2 class="mega-title">Industries</h2>
-                                <p class="mega-desc">Architecting heavy automated manufacturing pipelines, high-security financial models, and warehouse inventory automation.</p>
-                                <a href="#industries" target="_blank" class="btn-link">View all industries <i class="fa-solid fa-arrow-right"></i></a>
-                            </div>
+                            
                             <div class="mega-grid">
                                 <div class="mega-col">
-                                    <h4>Core Sectors</h4>
+                                    
                                     <ul>
-                                        <li><a href="#heavy-manufacturing" target="_blank">Heavy Manufacturing</a></li>
-                                        <li><a href="#logistics" target="_blank">Logistics & Inventory</a></li>
-                                        <li><a href="#healthcare" target="_blank">Healthcare & Clinics</a></li>
-                                        <li><a href="#ecommerce" target="_blank">Enterprise E-Commerce</a></li>
+                                        <li><a href="#dbreifs" target="_blank">Values</a></li>
+                                        <li><a href="#alumni" target="_blank">Missions</a></li>
+                                        <li><a href="#about" target="_blank">Our Team</a></li>
+                                        <li><a href="#locations" target="_blank">Locations</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a href="#insights" class="nav-link" data-target="insights">Insights</a>
+                
+             <li class="nav-item">
+                    <a href="#about" target="_blank" class="nav-link" style="border: none;">Contact Us</a>
                     <div class="mega-menu">
                         <div class="container mega-menu-inner">
-                            <div>
-                                <h2 class="mega-title">Insights</h2>
-                                <p class="mega-desc">In-depth engineering reviews analyzing microservices orchestration patterns and predictive ML logistics models.</p>
-                                <a href="#insights" target="_blank" class="btn-link">View all insights <i class="fa-solid fa-arrow-right"></i></a>
-                            </div>
+                            
                             <div class="mega-grid">
                                 <div class="mega-col">
-                                    <h4>Perspectives</h4>
+                                    
                                     <ul>
-                                        <li><a href="#dbriefs" target="_blank">Engineering Dbriefs</a></li>
-                                        <li><a href="#whitepapers" target="_blank">Whitepapers</a></li>
-                                        <li><a href="#newsroom" target="_blank">Newsroom</a></li>
+                                        <li><a href="#rfp" target="_blank">Chat with US</a></li>
+                                        <li><a href="#rfp" target="_blank">Book A Demo for Sales</a></li>
+                                        <li><a href="#contact" target="_blank">Contact</a></li>
+                                        
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </li>
-                <li class="nav-item">
-                    <a href="#about" target="_blank" class="nav-link" style="border: none;">About Us</a>
                 </li>
             </ul>
 
-            <a href="#rfp" target="_blank" class="btn btn-primary" style="padding: 0.8rem 1.5rem; font-size: 0.8rem;">Submit RFP</a>
+            
         </div>
     </nav>
 
@@ -1468,8 +1449,8 @@
         <div class="container">
             <div class="footer-logo-container">
                 <div class="logo">
-                    <div class="logo-box"><i class="fa-solid fa-layer-group"></i></div>
-                    <div class="logo-text">CAELION</div>
+                    
+                    <img class="logo-img" src="logo-main.jpeg" alt="caelion logo">
                 </div>
             </div>
 
